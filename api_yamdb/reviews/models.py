@@ -33,7 +33,7 @@ class Reviews(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.text[:15]}'
+        return self.text
 
     class Meta:
         constraints = [
@@ -67,7 +67,67 @@ class Comments(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.text[:15]}'
-    
+        return self.text
+
     class Meta():
         ordering = ['-pub_date']
+
+
+class Categories(models.Model):
+    name = models.CharField(
+        'categories_name',
+        max_length=256,
+    )
+    slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Genres(models.Model):
+    name = models.CharField(
+        'genres_name',
+        max_length=256,
+    )
+    slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Titles(models.Model):
+    # Возможно нужно добавить author и rating
+    name = models.CharField(
+        'titles_name',
+        max_length=256,
+    )
+    year = models.IntegerField()
+    description = models.TextField(
+        verbose_name='Описание произведения',
+        blank=True,
+        null=True,
+    )
+    genre = models.ManyToManyField(
+        Genres,
+        through='GenreTitles'
+    )
+    category = models.ForeignKey(
+        Categories,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        ordering = ['-year']
+
+
+class GenreTitles(models.Model):
+    genre = models.ForeignKey(Genres, on_delete=models.CASCADE)
+    titles = models.ForeignKey(Titles, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.genre} {self.titles}'
