@@ -1,8 +1,68 @@
-from django.contrib.auth import get_user_model
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (MaxValueValidator,
+                                    MinValueValidator,
+                                    RegexValidator)
 from django.db import models
+from django.contrib.auth.models import PermissionsMixin, AbstractUser
 
-User = get_user_model()
+
+class User(AbstractUser, PermissionsMixin):
+    USER = 1
+    MODERATOR = 2
+    ADMIN = 3
+
+    USER_ROLES = (
+        (USER, 'user'),
+        (MODERATOR, 'moderator'),
+        (ADMIN, 'admin'),
+    )
+
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        required=True,
+        validators=[
+            RegexValidator(
+                regex=r'^[\w.@+-]+\z',
+                message=(
+                    'Required. 150 characters or fewer.'
+                    ' Letters, digits and @/./+/-/_ only.'
+                )
+            ),
+        ],
+        verbose_name='Имя пользователя'
+    )
+    email = models.EmailField(
+        max_length=254,
+        unique=True,
+        required=True,
+        verbose_name='Электронная почта'
+    )
+    first_name = models.CharField(
+        max_length=150,
+        blank=True,
+        verbose_name='Имя'
+    )
+    last_name = models.CharField(
+        max_length=150,
+        blank=True,
+        verbose_name='Фамилия'
+    )
+    bio = models.CharField(
+        blank=True,
+        verbose_name='Биография'
+    )
+    role = models.PositiveSmallIntegerField(
+        choices=USER_ROLES,
+        blank=True,
+        default=1
+    )
+
+    class Meta:
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
+
+    def __str__(self):
+        return self.username
 
 
 class Reviews(models.Model):
@@ -68,6 +128,6 @@ class Comments(models.Model):
 
     def __str__(self) -> str:
         return f'{self.text[:15]}'
-    
+
     class Meta():
         ordering = ['-pub_date']
