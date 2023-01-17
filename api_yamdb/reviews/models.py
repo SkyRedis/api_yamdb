@@ -1,11 +1,10 @@
 from django.core.validators import (MaxValueValidator,
-                                    MinValueValidator,
-                                    RegexValidator)
+                                    MinValueValidator)
 from django.db import models
-from django.contrib.auth.models import PermissionsMixin, AbstractUser
+from django.contrib.auth.models import AbstractUser
 
 
-class User(AbstractUser, PermissionsMixin):
+class User(AbstractUser):
     USER = 1
     MODERATOR = 2
     ADMIN = 3
@@ -15,39 +14,7 @@ class User(AbstractUser, PermissionsMixin):
         (MODERATOR, 'moderator'),
         (ADMIN, 'admin'),
     )
-
-    username = models.CharField(
-        max_length=150,
-        unique=True,
-        required=True,
-        validators=[
-            RegexValidator(
-                regex=r'^[\w.@+-]+\z',
-                message=(
-                    'Required. 150 characters or fewer.'
-                    ' Letters, digits and @/./+/-/_ only.'
-                )
-            ),
-        ],
-        verbose_name='Имя пользователя'
-    )
-    email = models.EmailField(
-        max_length=254,
-        unique=True,
-        required=True,
-        verbose_name='Электронная почта'
-    )
-    first_name = models.CharField(
-        max_length=150,
-        blank=True,
-        verbose_name='Имя'
-    )
-    last_name = models.CharField(
-        max_length=150,
-        blank=True,
-        verbose_name='Фамилия'
-    )
-    bio = models.CharField(
+    bio = models.TextField(
         blank=True,
         verbose_name='Биография'
     )
