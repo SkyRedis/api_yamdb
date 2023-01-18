@@ -1,3 +1,6 @@
+import datetime as dt
+
+from django.core.exceptions import ValidationError
 from django.core.validators import (MaxValueValidator,
                                     MinValueValidator)
 from django.db import models
@@ -60,7 +63,7 @@ class Reviews(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.text[:15]}'
+        return self.text
 
     class Meta:
         constraints = [
@@ -94,7 +97,75 @@ class Comments(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.text[:15]}'
+        return self.text
 
     class Meta():
         ordering = ['-pub_date']
+
+
+class Categories(models.Model):
+    name = models.CharField(
+        verbose_name='Категория',
+        max_length=256,
+    )
+    slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Genres(models.Model):
+    name = models.CharField(
+        verbose_name='Жанр',
+        max_length=256,
+    )
+    slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+def validate_year(value):
+    if value > dt.datetime.now().year:
+        raise ValidationError(
+            'Значение больше текущего года!'
+        )
+    return value
+
+
+class Titles(models.Model):
+    # Возможно нужно добавить author и rating
+    name = models.CharField(
+        verbose_name='Произведение',
+        max_length=256,
+    )
+    year = models.IntegerField(validators=[validate_year])
+    description = models.TextField(
+        verbose_name='Описание произведения',
+        blank=True,
+        null=True,
+    )
+    genre = models.ManyToManyField(
+        Genres,
+        through='GenreTitles'
+    )
+    category = models.ForeignKey(
+        Categories,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        ordering = ['-year']
+
+
+class GenreTitles(models.Model):
+    genre = models.ForeignKey(Genres, on_delete=models.CASCADE)
+    titles = models.ForeignKey(Titles, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.genre} {self.titles}'
