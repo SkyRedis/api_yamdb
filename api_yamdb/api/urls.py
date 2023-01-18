@@ -1,14 +1,21 @@
-from django.urls import path, include, re_path
+from api.views import CommentViewSet, ReviewViewSet
+from django.urls import include, path, re_path
 from rest_framework import routers
-
-from api.views import ...
 
 router_api_v1 = routers.DefaultRouter()
 
 router_api_v1.register(r'v1/users', ...)  # get, post, get_id, patch_id, del. Права доступа: Администратор
 router_api_v1.register(r'v1/users/me', ...)  # get, patch Получение данных своей учетной записи. Права доступа: is_authorized
-router_api_v1.register(r'v1/...', ...)
-router_api_v1.register(r'v1/...', ...)
+router_api_v1.register(
+    r'v1/(?P<title_id>\d+)/reviews/',
+    ReviewViewSet,
+    basename='reviews'
+)
+router_api_v1.register(
+    r'v1/(?P<title_id>\d+)/reviews/(?P<review_id>\d+)/comments/',
+    CommentViewSet,
+    basename='comments'
+)
 
 urlpatterns = [
     re_path('', include(router_api_v1.urls)),
