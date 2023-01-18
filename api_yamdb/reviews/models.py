@@ -147,7 +147,7 @@ class Title(models.Model):
     )
     genre = models.ManyToManyField(
         Genre,
-        through='GenreTitles'
+        through='GenreTitle'
     )
     category = models.ForeignKey(
         Category,
