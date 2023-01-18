@@ -103,7 +103,7 @@ class Comments(models.Model):
         ordering = ['-pub_date']
 
 
-class Categories(models.Model):
+class Category(models.Model):
     name = models.CharField(
         verbose_name='Категория',
         max_length=256,
@@ -114,7 +114,7 @@ class Categories(models.Model):
         return self.name
 
 
-class Genres(models.Model):
+class Genre(models.Model):
     name = models.CharField(
         verbose_name='Жанр',
         max_length=256,
@@ -133,7 +133,7 @@ def validate_year(value):
     return value
 
 
-class Titles(models.Model):
+class Title(models.Model):
     # Возможно нужно добавить author и rating
     name = models.CharField(
         verbose_name='Произведение',
@@ -146,11 +146,11 @@ class Titles(models.Model):
         null=True,
     )
     genre = models.ManyToManyField(
-        Genres,
+        Genre,
         through='GenreTitles'
     )
     category = models.ForeignKey(
-        Categories,
+        Category,
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
@@ -163,9 +163,9 @@ class Titles(models.Model):
         ordering = ['-year']
 
 
-class GenreTitles(models.Model):
-    genre = models.ForeignKey(Genres, on_delete=models.CASCADE)
-    titles = models.ForeignKey(Titles, on_delete=models.CASCADE)
+class GenreTitle(models.Model):
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    title = models.ForeignKey(Title, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.genre} {self.titles}'
+        return f'{self.genre} {self.title}'
