@@ -1,4 +1,7 @@
+import datetime as dt
+
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -75,7 +78,7 @@ class Comments(models.Model):
 
 class Categories(models.Model):
     name = models.CharField(
-        'categories_name',
+        verbose_name='Категория',
         max_length=256,
     )
     slug = models.SlugField(unique=True, max_length=50)
@@ -86,7 +89,7 @@ class Categories(models.Model):
 
 class Genres(models.Model):
     name = models.CharField(
-        'genres_name',
+        verbose_name='Жанр',
         max_length=256,
     )
     slug = models.SlugField(unique=True, max_length=50)
@@ -95,13 +98,21 @@ class Genres(models.Model):
         return self.name
 
 
+def validate_year(value):
+    if value > dt.datetime.now().year:
+        raise ValidationError(
+            'Значение больше текущего года!'
+        )
+    return value
+
+
 class Titles(models.Model):
     # Возможно нужно добавить author и rating
     name = models.CharField(
-        'titles_name',
+        verbose_name='Произведение',
         max_length=256,
     )
-    year = models.IntegerField()
+    year = models.IntegerField(validators=[validate_year])
     description = models.TextField(
         verbose_name='Описание произведения',
         blank=True,
