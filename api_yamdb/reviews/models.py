@@ -1,8 +1,35 @@
-from django.contrib.auth import get_user_model
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (MaxValueValidator,
+                                    MinValueValidator)
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
+
+class User(AbstractUser):
+    USER = 1
+    MODERATOR = 2
+    ADMIN = 3
+
+    USER_ROLES = (
+        (USER, 'user'),
+        (MODERATOR, 'moderator'),
+        (ADMIN, 'admin'),
+    )
+    bio = models.TextField(
+        blank=True,
+        verbose_name='Биография'
+    )
+    role = models.PositiveSmallIntegerField(
+        choices=USER_ROLES,
+        blank=True,
+        default=1
+    )
+
+    class Meta:
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
+
+    def __str__(self):
+        return self.username
 
 
 class Reviews(models.Model):
@@ -68,6 +95,6 @@ class Comments(models.Model):
 
     def __str__(self) -> str:
         return f'{self.text[:15]}'
-    
+
     class Meta():
         ordering = ['-pub_date']
