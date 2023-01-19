@@ -1,10 +1,9 @@
 import datetime as dt
 
-from django.core.exceptions import ValidationError
-from django.core.validators import (MaxValueValidator,
-                                    MinValueValidator)
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class User(AbstractUser):
@@ -35,7 +34,7 @@ class User(AbstractUser):
         return self.username
 
 
-class Reviews(models.Model):
+class Review(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -74,7 +73,7 @@ class Reviews(models.Model):
         ]
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -82,7 +81,7 @@ class Comments(models.Model):
         verbose_name='Автор коммента',
     )
     review_id = models.ForeignKey(
-        Reviews,
+        Review,
         on_delete=models.CASCADE,
         related_name='review',
         verbose_name='ID отзыва',

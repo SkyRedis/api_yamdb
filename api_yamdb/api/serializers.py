@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from reviews.models import Category, Genre, Title, GenreTitle
+from reviews.models import Category, Genre, Title, GenreTitle, Comment, Review
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -39,3 +39,17 @@ class TitleSerializer(serializers.ModelSerializer):
             GenreTitle.objects.create(
                 genre=current_genre, title=title)
         return title
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta():
+        fields = ('id', 'text', 'author', 'pub_date')
+        model = Comment
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+
+    class Meta():
+        fields = ('id', 'text', 'author', 'score', 'pub_date')
+        model = Review
