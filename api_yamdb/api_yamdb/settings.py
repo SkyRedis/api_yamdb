@@ -110,7 +110,7 @@ STATICFILES_DIRS = ((BASE_DIR / 'static/'),)
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  # временный AllowAny для запуска MVP
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',  # временный AllowAny для запуска MVP
     ],
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
