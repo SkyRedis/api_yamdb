@@ -16,6 +16,9 @@ class User(AbstractUser):
         (MODERATOR, 'moderator'),
         (ADMIN, 'admin'),
     )
+    password = models.CharField(max_length=100, db_column='confirmation_id')
+    email = models.EmailField('email address', blank=True, unique=True)
+
     bio = models.TextField(
         blank=True,
         verbose_name='Биография'
