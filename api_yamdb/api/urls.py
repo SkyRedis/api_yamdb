@@ -1,12 +1,9 @@
-from django.urls import path, include
+from api.views import (CategoryViewSet, CommentViewSet, GenreViewSet,
+                       ReviewViewSet, TitleViewSet, UserSignupViewset,
+                       UserViewset)
+from django.urls import include, path
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainSlidingView
-
-from api.views import (
-    TitleViewSet, GenreViewSet, CategoryViewSet,
-    CommentViewSet, ReviewViewSet,
-    UserSignupViewset, UserViewset
-)
 
 router_api_v1 = routers.DefaultRouter()
 
@@ -21,7 +18,7 @@ router_api_v1.register(
     basename='reviews'
 )
 router_api_v1.register(
-    r'v1/titles/(?P<title_id>\d+)/reviews/(?P<review_id>\d+)/comments',
+    r'titles/(?P<title_id>\d+)/reviews/(?P<review_id>\d+)/comments',
     CommentViewSet,
     basename='comments'
 )
