@@ -1,12 +1,18 @@
-from rest_framework import filters, permissions, viewsets
+import secrets
+import string
+
+from rest_framework import filters, permissions, viewsets, views, exceptions
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
 from rest_framework import permissions
+from rest_framework_simplejwt.serializers import SlidingToken
 
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.contrib.auth import authenticate
 
 from reviews.models import Category, Genre, Title, Comment, Review, User
 
@@ -14,7 +20,8 @@ from .serializers import (
     CategorySerializer,
     GenreSerializer, TitleSerializer,
     CommentSerializer, ReviewSerializer,
-    UserSignupSerializer, UserSerializer
+    UserSignupSerializer, UserSerializer,
+    TokenRequestSerializer
 )
 
 
@@ -117,18 +124,18 @@ class UserViewset(ModelViewSet):
     PATCH: Изменить данные своей учетной записи Права доступа:
          Любой авторизованный пользователь
          Поля email и username должны быть уникальными.
+    USER_ROLES = ('user'),
+                 ('moderator'),
+                 ('admin'),
     """
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = 'username'
+    permission_classes = (permissions.IsAuthenticated,)
 
     def retrieve(self, request, *args, **kwargs):
         if self.kwargs['username'] == 'me':
-            if request and hasattr(request, "user"):
-                user = request.user
-                serializer = self.get_serializer(user)
-                return Response(serializer.data)
-            user = get_object_or_404(User, username="admin5")
+            user = request.user
             serializer = self.get_serializer(user)
             return Response(serializer.data)
 
@@ -138,7 +145,22 @@ class UserViewset(ModelViewSet):
         return Response(serializer.data)
 
     def perform_create(self, serializer):
-        serializer.save(password='change_me')
+        if serializer.is_valid():
+            alphabet = string.ascii_letters + string.digits
+            password = ''.join(secrets.choice(alphabet) for i in range(20))
+
+            user = serializer.save()
+            user.set_password(password)
+            user.save()
+
+            send_mail(
+                '"YAMDB". Registration confirmation',  # "Тема"
+                (f'Уважаемый {user.username},'
+                 ' ваш код подтверждения: {password}.'),  # "Текст"
+                'admin@yamdb.com',  # "От кого"
+                [f'{user.email}'],  # "Кому"
+                fail_silently=False,
+            )
 
 
 class UserSignupViewset(CreateModelMixin, GenericViewSet):
@@ -153,4 +175,45 @@ class UserSignupViewset(CreateModelMixin, GenericViewSet):
     permission_classes = (permissions.AllowAny, )
 
     def perform_create(self, serializer):
-        serializer.save(password='change_me')
+        if serializer.is_valid():
+            alphabet = string.ascii_letters + string.digits
+            password = ''.join(secrets.choice(alphabet) for i in range(20))
+
+            user = serializer.save()
+            user.set_password(password)
+            user.save()
+
+            send_mail(
+                '"YAMDB". Registration confirmation',  # "Тема"
+                (f'Уважаемый {user.username},'
+                 ' ваш код подтверждения: {password}.'),  # "Текст"
+                'admin@yamdb.com',  # "От кого"
+                [f'{user.email}'],  # "Кому"
+                fail_silently=False,
+            )
+
+
+class APIGetToken(views.APIView):
+    """
+    Запрос токена для зарегистрированного пользователя.
+    1. POST-запрос с обязательными параметрами 'username' и 'confirmation_id'
+       на эндпоинт /api/v1/auth/token/.
+    2. Аутентифицированному пользователю возвращается токен: Bearer.
+    """
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        data_serializer = TokenRequestSerializer(data=request.data)
+
+        data_serializer.is_valid(raise_exception=True)
+        username = data_serializer.validated_data['username']
+        password = data_serializer.validated_data['confirmation_id']
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            token = SlidingToken.for_user(user)
+            response = {'token': str(token)}
+
+            return Response(response)
+        raise exceptions.AuthenticationFailed('Check your confirmation_id')

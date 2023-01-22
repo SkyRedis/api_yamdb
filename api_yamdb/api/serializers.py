@@ -1,4 +1,4 @@
-from rest_framework import serializers, validators
+from rest_framework import serializers, validators, exceptions
 
 from reviews.models import (
     Category, Genre, Title, GenreTitle, Comment, Review, User
@@ -7,22 +7,11 @@ from reviews.models import (
 
 class UserSignupSerializer(serializers.ModelSerializer):
     """
-    Ресурс auth: аутентификация
-    1. Пользователь отправляет POST-запрос с параметрами email и username
+    Регистрация пользователя
+    1. POST-запрос с обязательными параметрами 'email' и 'username'
        на эндпоинт /api/v1/auth/signup/.
     2. Сервис YaMDB отправляет письмо с кодом подтверждения (confirmation_code)
-       на указанный адрес email. - НЕ РЕАЛИЗОВАНО
-    """
-    email = serializers.EmailField(required=True)
-
-    class Meta:
-        fields = ('email', 'username')
-        model = User
-
-
-class UserSerializer(serializers.ModelSerializer):
-    """
-    Ресурс users: пользователи
+       на указанный адрес email.
     """
     username = serializers.CharField(
         max_length=150,
@@ -33,6 +22,36 @@ class UserSerializer(serializers.ModelSerializer):
         validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
 
+    def validate(self, attrs):
+        if attrs['username'] == 'me':
+            raise exceptions.ValidationError('Do not use "me" as username')
+        return super().validate(attrs)
+
+    class Meta:
+        fields = ('email', 'username')
+        model = User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """
+    Создание пользователя (администратором)
+    Редактирование пользователя
+    Ендпоинт /api/v1/users
+    """
+    username = serializers.CharField(
+        max_length=150,
+        validators=[validators.UniqueValidator(queryset=User.objects.all())]
+    )
+    email = serializers.EmailField(
+        required=True,
+        validators=[validators.UniqueValidator(queryset=User.objects.all())]
+    )
+
+    def validate(self, attrs):
+        if attrs['username'] == 'me':
+            raise exceptions.ValidationError('Do not use "me" as username')
+        return super().validate(attrs)
+
     class Meta:
         fields = ('username',
                   'email',
@@ -41,6 +60,25 @@ class UserSerializer(serializers.ModelSerializer):
                   'bio',
                   'role')
         model = User
+
+
+class TokenRequestSerializer(serializers.Serializer):
+    """
+    Запрос токена для зарегистрированного пользователя.
+    1. POST-запрос с обязательными параметрами 'username' и 'confirmation_id'
+       на эндпоинт /api/v1/auth/token/.
+    2. Аутентифицированному пользователю возвращается токен: Bearer.
+    """
+    username = serializers.CharField(required=True)
+    confirmation_id = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        try:
+            User.objects.get(username=attrs['username'])
+        except User.DoesNotExist:
+            raise exceptions.NotFound(f'User {attrs["username"]} not found')
+
+        return super().validate(attrs)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -93,4 +131,3 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta():
         fields = ('id', 'text', 'author', 'score', 'pub_date')
         model = Review
-

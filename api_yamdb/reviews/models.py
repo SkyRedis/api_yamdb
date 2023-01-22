@@ -7,14 +7,10 @@ from django.db import models
 
 
 class User(AbstractUser):
-    USER = 1
-    MODERATOR = 2
-    ADMIN = 3
-
     USER_ROLES = (
-        (USER, 'user'),
-        (MODERATOR, 'moderator'),
-        (ADMIN, 'admin'),
+        ('user', 'Пользователь'),
+        ('moderator', 'Модератор'),
+        ('admin', 'Администратор'),
     )
     password = models.CharField(max_length=100, db_column='confirmation_id')
     email = models.EmailField('email address', blank=True, unique=True)
@@ -23,10 +19,11 @@ class User(AbstractUser):
         blank=True,
         verbose_name='Биография'
     )
-    role = models.PositiveSmallIntegerField(
+    role = models.CharField(
+        max_length=10,
         choices=USER_ROLES,
         blank=True,
-        default=1
+        default='user'
     )
 
     class Meta:
