@@ -7,8 +7,10 @@ colorama==0.4.6
 Django==3.2
 django-filter==22.1
 djangorestframework==3.12.4
+djangorestframework-simplejwt==5.2.2
 idna==3.4
 iniconfig==2.0.0
+install==1.3.5
 packaging==23.0
 pluggy==0.13.1
 py==1.11.0
@@ -18,6 +20,7 @@ pytest-django==4.4.0
 pytest-pythonpath==0.7.3
 pytz==2022.7.1
 requests==2.26.0
+simplepip==0.2
 sqlparse==0.4.3
 toml==0.10.2
 urllib3==1.26.14

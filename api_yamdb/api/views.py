@@ -8,35 +8,45 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from reviews.models import Category, Comment, Genre, Review, Title, User
 
 from .serializers import (CategorySerializer, CommentSerializer,
-                          GenreSerializer, ReviewSerializer, TitleSerializer,
+                          GenreSerializer, ReviewSerializer,
+                          TitleListSerializer, TitleCreateSerializer,
                           UserSerializer, UserSignupSerializer)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    """Список категорий"""
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     pagination_class = PageNumberPagination
     permission_classes = (permissions.AllowAny,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('=category__name',)
+    lookup_field = 'slug'
 
 
 class GenreViewSet(viewsets.ModelViewSet):
+    """Список жанров"""
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     pagination_class = PageNumberPagination
     permission_classes = (permissions.AllowAny,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('=genre__name',)
+    lookup_field = 'slug'
 
 
 class TitleViewSet(viewsets.ModelViewSet):
+    """Список произведений"""
     queryset = Title.objects.all()
-    serializer_class = TitleSerializer
     pagination_class = PageNumberPagination
     permission_classes = (permissions.AllowAny,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name', 'year', 'genre__slug', 'category__slug')
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TitleListSerializer
+        return TitleCreateSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
