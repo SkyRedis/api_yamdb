@@ -34,6 +34,70 @@ class User(AbstractUser):
         return self.username
 
 
+class Category(models.Model):
+    name = models.CharField(
+        verbose_name='Категория',
+        max_length=256,
+    )
+    slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Genre(models.Model):
+    name = models.CharField(
+        verbose_name='Жанр',
+        max_length=256,
+    )
+    slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+def validate_year(value):
+    if value > dt.datetime.now().year:
+        raise ValidationError(
+            'Значение больше текущего года!'
+        )
+    return value
+
+
+class Title(models.Model):
+    # Возможно нужно добавить author и rating
+    name = models.CharField(
+        verbose_name='Произведение',
+        max_length=256,
+    )
+    year = models.IntegerField(validators=[validate_year])
+    description = models.TextField(
+        verbose_name='Описание произведения',
+        blank=True,
+        null=True,
+    )
+    genre = models.ManyToManyField(
+        Genre,
+        related_name='titles',
+        verbose_name='жанр',
+        through='GenreTitle'
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        related_name='titles',
+        verbose_name='категория',
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        ordering = ['-year']
+
+
 class Review(models.Model):
     author = models.ForeignKey(
         User,
@@ -41,7 +105,10 @@ class Review(models.Model):
         related_name='reviews',
         verbose_name='Автор отзыва',
     )
-    title_id = models.IntegerField(
+    title_id = models.ForeignKey(
+        Title,
+        on_delete=models.CASCADE,
+        related_name='title',
         verbose_name='ID произведения',
     )
     # Заменить IntegerField на ForeignKey после создания модели произведений
@@ -100,66 +167,6 @@ class Comment(models.Model):
 
     class Meta():
         ordering = ['-pub_date']
-
-
-class Category(models.Model):
-    name = models.CharField(
-        verbose_name='Категория',
-        max_length=256,
-    )
-    slug = models.SlugField(unique=True, max_length=50)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-class Genre(models.Model):
-    name = models.CharField(
-        verbose_name='Жанр',
-        max_length=256,
-    )
-    slug = models.SlugField(unique=True, max_length=50)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-def validate_year(value):
-    if value > dt.datetime.now().year:
-        raise ValidationError(
-            'Значение больше текущего года!'
-        )
-    return value
-
-
-class Title(models.Model):
-    # Возможно нужно добавить author и rating
-    name = models.CharField(
-        verbose_name='Произведение',
-        max_length=256,
-    )
-    year = models.IntegerField(validators=[validate_year])
-    description = models.TextField(
-        verbose_name='Описание произведения',
-        blank=True,
-        null=True,
-    )
-    genre = models.ManyToManyField(
-        Genre,
-        through='GenreTitle'
-    )
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-    )
-
-    def __str__(self) -> str:
-        return self.name
-
-    class Meta:
-        ordering = ['-year']
 
 
 class GenreTitle(models.Model):
