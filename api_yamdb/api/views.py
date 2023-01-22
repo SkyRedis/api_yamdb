@@ -1,27 +1,23 @@
 import secrets
 import string
 
-from rest_framework import filters, permissions, viewsets, views, exceptions
-from rest_framework_simplejwt.serializers import SlidingToken
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework.mixins import CreateModelMixin
-from rest_framework.response import Response
-
-from django_filters.rest_framework import DjangoFilterBackend
-from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail
 from django.contrib.auth import authenticate
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import exceptions, filters, permissions, views, viewsets
+from rest_framework.mixins import CreateModelMixin
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework_simplejwt.serializers import SlidingToken
+from reviews.models import Category, Comment, Genre, Review, Title, User
 
-from reviews.models import Category, Genre, Title, Comment, Review, User
-
-from .serializers import (
-    CategorySerializer, GenreSerializer,
-    CommentSerializer, ReviewSerializer,
-    UserSignupSerializer, UserSerializer,
-    TitleListSerializer, TitleCreateSerializer,
-    TokenRequestSerializer
-)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          GenreSerializer, ReviewSerializer,
+                          TitleCreateSerializer, TitleListSerializer,
+                          TokenRequestSerializer, UserSerializer,
+                          UserSignupSerializer)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -63,26 +59,26 @@ class TitleViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
         if self.action == 'list':
-            title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
             queryset = Review.objects.all().filter(
-                title_id=title.id
-            )
+                title_id=self.kwargs.get('title_id'),
+            ).order_by('id')
+            return queryset
         else:
-            title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-            queryset = title.objects.all().filter(
-                title_id=title.id,
+            review = get_object_or_404(
+                Review,
+                title_id=self.kwargs.get('title_id'),
                 id=self.kwargs.get('review_id')
             )
-        return queryset
+            return review
 
     def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-        serializer.save(author=self.request.user, title=title)
+        serializer.save(author=self.request.user, title_id=title)
 
     def perform_update(self, serializer):
         serializer.save(author=self.request.user)
@@ -96,24 +92,14 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'list':
-            title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-            review = Review.objects.all().filter(
-                title_id=title.id,
-                id=self.kwargs.get('review_id')
-            )
-            queryset = Review.objects.all().filter(
-                review_id=review.id
-            )
-        else:
-            title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-            review = Review.objects.all().filter(
-                title_id=title.id,
-                id=self.kwargs.get('review_id')
-            )
             queryset = Comment.objects.all().filter(
-                review_id=review.id,
+                review_id=self.kwargs.get('review_id')
+            ).order_by('id')
+        else:
+            queryset = Comment.objects.all().filter(
+                review_id=self.kwargs.get('review_id'),
                 id=self.kwargs.get('comment_id')
-            )
+            ).order_by('id')
         return queryset
 
     def perform_create(self, serializer):
@@ -121,8 +107,8 @@ class CommentViewSet(viewsets.ModelViewSet):
         review = Review.objects.all().filter(
                 title_id=title.id,
                 id=self.kwargs.get('review_id')
-        )
-        serializer.save(author=self.request.user, review=review)
+        )[0]
+        serializer.save(author=self.request.user, review_id=review)
 
     def perform_update(self, serializer):
         serializer.save(author=self.request.user)
@@ -173,7 +159,7 @@ class UserViewset(ModelViewSet):
             send_mail(
                 '"YAMDB". Registration confirmation',  # "Тема"
                 (f'Уважаемый {user.username},'
-                 ' ваш код подтверждения: {password}.'),  # "Текст"
+                 f' ваш код подтверждения: {password}.'),  # "Текст"
                 'admin@yamdb.com',  # "От кого"
                 [f'{user.email}'],  # "Кому"
                 fail_silently=False,
@@ -203,7 +189,7 @@ class UserSignupViewset(CreateModelMixin, GenericViewSet):
             send_mail(
                 '"YAMDB". Registration confirmation',  # "Тема"
                 (f'Уважаемый {user.username},'
-                 ' ваш код подтверждения: {password}.'),  # "Текст"
+                 f' ваш код подтверждения: {password}.'),  # "Текст"
                 'admin@yamdb.com',  # "От кого"
                 [f'{user.email}'],  # "Кому"
                 fail_silently=False,
