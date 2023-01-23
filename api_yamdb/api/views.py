@@ -57,22 +57,15 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
-    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = (permissions.AllowAny,)
     pagination_class = PageNumberPagination
+    lookup_field = 'id'
 
     def get_queryset(self):
-        if self.action == 'list':
-            queryset = Review.objects.all().filter(
-                title_id=self.kwargs.get('title_id'),
-            ).order_by('id')
-        else:
-            queryset = get_object_or_404(
-                Review,
-                title_id=self.kwargs.get('title_id'),
-                id=self.kwargs.get('review_id')
-            )
+        queryset = Review.objects.all().filter(
+            title_id=self.kwargs.get('title_id'),
+        ).order_by('id')
         return queryset
 
     def perform_create(self, serializer):
@@ -84,25 +77,15 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = (permissions.AllowAny,)
     pagination_class = PageNumberPagination
+    lookup_field = 'id'
 
     def get_queryset(self):
-        if self.action == 'list':
-            queryset = Comment.objects.all().filter(
-                review_id=self.kwargs.get('review_id')
-            ).order_by('id')
-        else:
-            queryset = Comment.objects.all().filter(
-                review_id=self.kwargs.get('review_id'),
-            ).order_by('id')
-            comment = get_object_or_404(
-                queryset,
-                id=self.kwargs.get('comment_id')
-            )
-            return comment
+        queryset = Comment.objects.all().filter(
+            review_id=self.kwargs.get('review_id')
+        ).order_by('id')
         return queryset
 
     def perform_create(self, serializer):

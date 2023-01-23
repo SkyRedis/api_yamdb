@@ -129,6 +129,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta():
         fields = ('id', 'text', 'author', 'pub_date')
         model = Comment
+        lookup_field = 'id'
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -140,3 +141,4 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta():
         fields = ('id', 'text', 'author', 'score', 'pub_date')
         model = Review
+        lookup_field = 'id'
