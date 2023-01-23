@@ -91,8 +91,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
         review = Review.objects.all().filter(
-                title_id=title.id,
-                id=self.kwargs.get('review_id')
+            title_id=title.id,
+            id=self.kwargs.get('review_id')
         )[0]
         serializer.save(author=self.request.user, review_id=review)
 
@@ -135,21 +135,9 @@ class UserViewset(ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            alphabet = string.ascii_letters + string.digits
-            password = ''.join(secrets.choice(alphabet) for i in range(20))
-
             user = serializer.save()
-            user.set_password(password)
+            user.set_password(None)
             user.save()
-
-            send_mail(
-                '"YAMDB". Registration confirmation',  # "Тема"
-                (f'Уважаемый {user.username},'
-                 f' ваш код подтверждения: {password}.'),  # "Текст"
-                'admin@yamdb.com',  # "От кого"
-                [f'{user.email}'],  # "Кому"
-                fail_silently=False,
-            )
 
 
 class UserSignupViewset(CreateModelMixin, GenericViewSet):
@@ -164,11 +152,16 @@ class UserSignupViewset(CreateModelMixin, GenericViewSet):
     permission_classes = (permissions.AllowAny, )
 
     def perform_create(self, serializer):
-        if serializer.is_valid():
+
+        if serializer.is_valid(raise_exception=True):
+            username = serializer.validated_data['username']
+            email = serializer.validated_data['email']
+            user, created = User.objects.get_or_create(username=username,
+                                                       email=email)
+
             alphabet = string.ascii_letters + string.digits
             password = ''.join(secrets.choice(alphabet) for i in range(20))
 
-            user = serializer.save()
             user.set_password(password)
             user.save()
 

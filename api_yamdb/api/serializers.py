@@ -12,16 +12,32 @@ class UserSignupSerializer(serializers.ModelSerializer):
     """
     username = serializers.CharField(
         max_length=150,
-        validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
     email = serializers.EmailField(
         required=True,
-        validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
 
     def validate(self, attrs):
         if attrs['username'] == 'me':
-            raise exceptions.ValidationError('Do not use "me" as username')
+            raise exceptions.ValidationError(
+                {'username': ('Do not use "me" as username')})
+
+        user = User.objects.filter(username=attrs['username'],
+                                   email=attrs['email'])
+        if user.exists():
+            if user[0].has_usable_password():
+                raise exceptions.ValidationError(
+                    {'username': 'User is already registered'})
+            return super().validate(attrs)
+
+        if User.objects.filter(username=attrs['username']).exists():
+            raise exceptions.ValidationError(
+                {'username': 'This field must be unique.'})
+
+        if User.objects.filter(email=attrs['email']):
+            raise exceptions.ValidationError(
+                {'email': 'This field must be unique.'})
+
         return super().validate(attrs)
 
     class Meta:
@@ -98,7 +114,7 @@ class TitleListSerializer(serializers.ModelSerializer):
     genre = serializers.StringRelatedField(
         many=True)
     category = serializers.StringRelatedField(
-        )
+    )
 
     class Meta:
         fields = ('id', 'name', 'year', 'description', 'genre', 'category')
@@ -113,7 +129,7 @@ class TitleCreateSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         slug_field='slug',
         queryset=Category.objects.all()
-        )
+    )
 
     class Meta:
         fields = ('id', 'name', 'year', 'description', 'genre', 'category')
