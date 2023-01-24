@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from rest_framework import exceptions, serializers, validators
 from reviews.models import Category, Comment, Genre, Review, Title, User
 
@@ -115,10 +116,20 @@ class TitleListSerializer(serializers.ModelSerializer):
         many=True)
     category = serializers.StringRelatedField(
     )
+    rating = serializers.SerializerMethodField()
 
     class Meta:
-        fields = ('id', 'name', 'year', 'description', 'genre', 'category')
+        fields = (
+            'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
+        )
         model = Title
+
+    def get_rating(self, obj):
+        reviews = Review.objects.all().filter(
+            title_id=obj.id
+        )
+        rating = reviews.aggregate(Avg('score'))
+        return int(list(rating.values())[0])
 
 
 class TitleCreateSerializer(serializers.ModelSerializer):
@@ -130,10 +141,20 @@ class TitleCreateSerializer(serializers.ModelSerializer):
         slug_field='slug',
         queryset=Category.objects.all()
     )
+    rating = serializers.SerializerMethodField()
 
     class Meta:
-        fields = ('id', 'name', 'year', 'description', 'genre', 'category')
+        fields = (
+            'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
+        )
         model = Title
+
+    def get_rating(self, obj):
+        reviews = Review.objects.all().filter(
+            title_id=obj.id
+        )
+        rating = reviews.aggregate(Avg('score'))
+        return int(list(rating.values())[0])
 
 
 class CommentSerializer(serializers.ModelSerializer):
