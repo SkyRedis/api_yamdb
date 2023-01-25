@@ -11,10 +11,13 @@ class UserSignupSerializer(serializers.ModelSerializer):
     2. Сервис YaMDB отправляет письмо с кодом подтверждения (confirmation_code)
        на указанный адрес email.
     """
-    username = serializers.CharField(
+    username = serializers.RegexField(
+        r"^[\w.@+-]+\Z",
         max_length=150,
+        required=True
     )
     email = serializers.EmailField(
+        max_length=254,
         required=True,
     )
 
@@ -26,9 +29,9 @@ class UserSignupSerializer(serializers.ModelSerializer):
         user = User.objects.filter(username=attrs['username'],
                                    email=attrs['email'])
         if user.exists():
-            if user[0].has_usable_password():
+            """if user[0].has_usable_password():
                 raise exceptions.ValidationError(
-                    {'username': 'User is already registered'})
+                    {'username': 'User is already registered'})"""
             return super().validate(attrs)
 
         if User.objects.filter(username=attrs['username']).exists():
@@ -52,11 +55,14 @@ class UserSerializer(serializers.ModelSerializer):
     Редактирование пользователя
     Ендпоинт /api/v1/users
     """
-    username = serializers.CharField(
+    username = serializers.RegexField(
+        r'^[\w.@+-]+\Z',
         max_length=150,
+        required=True,
         validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
     email = serializers.EmailField(
+        max_length=254,
         required=True,
         validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
