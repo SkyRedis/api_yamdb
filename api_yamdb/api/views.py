@@ -6,10 +6,11 @@ from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import exceptions, filters, permissions, views, viewsets
+from rest_framework import exceptions, filters, permissions, views, viewsets, generics
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action, permission_classes, api_view
 from rest_framework_simplejwt.serializers import RefreshToken
 from reviews.models import Category, Comment, Genre, Review, Title, User
 from .permissions import IsAdmin, Titles, Categories, Comments, Reviews, Genres
@@ -125,23 +126,24 @@ class UserViewset(ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('username',)
 
-    def retrieve(self, request, *args, **kwargs):
-        if self.kwargs['username'] == 'me':
-            user = request.user
-            serializer = self.get_serializer(user)
-            return Response(serializer.data)
+    """def update(self, request, *args, **kwargs):
+        raise exceptions.MethodNotAllowed('PUT')"""
 
-        username = self.kwargs['username']
-        user = get_object_or_404(User, username=username)
-        serializer = self.get_serializer(user)
-        return Response(serializer.data)
+    """@api_view(['PATCH'])
+    def update(self, request, *args, **kwargs):
+        user = User.objects.get(username=kwargs['username'])
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save
+
+        return Response(serializer.data)"""
 
     def perform_create(self, serializer):
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(None)
             user.save()
-
+    
 
 class UserSignupView(views.APIView):
     """
@@ -169,13 +171,39 @@ class UserSignupView(views.APIView):
 
         send_mail(
             '"YAMDB". Registration confirmation',  # "Тема"
-            f'{password}',  # "Текст"
+            f'Usernsme: {username}, confirmation_code: {password}',  # "Текст"
             'admin@yamdb.com',  # "От кого"
             [f'{user.email}'],  # "Кому"
             fail_silently=False,
         )
 
         return Response(serializer.data, status=HTTPStatus.OK)
+
+
+class MeView(generics.RetrieveUpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def get(self, request):
+        try:
+            user = request.user
+            serializer = self.get_serializer(user)
+            return Response(serializer.data)
+        except AttributeError:
+            raise exceptions.NotFound
+    
+    def put(self, request, *args, **kwargs):
+        raise exceptions.MethodNotAllowed('PUT')
+
+    def update(self, request, *args, **kwargs):
+        user = request.user
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        
+        serializer.save(role=user.role)
+
+        return Response(serializer.data)
 
 
 class GetTokenView(views.APIView):
@@ -192,7 +220,7 @@ class GetTokenView(views.APIView):
 
         data_serializer.is_valid(raise_exception=True)
         username = data_serializer.validated_data['username']
-        password = data_serializer.validated_data['confirmation_id']
+        password = data_serializer.validated_data['confirmation_code']
 
         user = authenticate(username=username, password=password)
 
@@ -201,4 +229,4 @@ class GetTokenView(views.APIView):
             response = {'token': str(token.access_token)}
 
             return Response(response)
-        raise exceptions.NotAuthenticated('Check your confirmation_id')
+        raise exceptions.ValidationError('Check your confirmation_id')
