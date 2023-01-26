@@ -1,17 +1,18 @@
 import secrets
 import string
 
+from http import HTTPStatus
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import exceptions, filters, permissions, views, viewsets
-from rest_framework.mixins import CreateModelMixin
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework_simplejwt.serializers import SlidingToken
+from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.serializers import RefreshToken
 from reviews.models import Category, Comment, Genre, Review, Title, User
+from .permissions import IsAdmin, Titles, Categories, Comments, Reviews, Genres
 
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, ReviewSerializer,
@@ -25,7 +26,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     pagination_class = PageNumberPagination
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (Categories,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('=category__name',)
     lookup_field = 'slug'
@@ -36,7 +37,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     pagination_class = PageNumberPagination
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (Genres,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('=genre__name',)
     lookup_field = 'slug'
@@ -46,7 +47,7 @@ class TitleViewSet(viewsets.ModelViewSet):
     """Список произведений"""
     queryset = Title.objects.all()
     pagination_class = PageNumberPagination
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (Titles,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('name', 'year', 'genre__slug', 'category__slug')
 
@@ -58,7 +59,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (Reviews,)
     pagination_class = PageNumberPagination
     lookup_field = 'id'
 
@@ -78,7 +79,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (Comments,)
     pagination_class = PageNumberPagination
     lookup_field = 'id'
 
@@ -120,7 +121,9 @@ class UserViewset(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = 'username'
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (IsAdmin, )
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('username',)
 
     def retrieve(self, request, *args, **kwargs):
         if self.kwargs['username'] == 'me':
@@ -140,42 +143,42 @@ class UserViewset(ModelViewSet):
             user.save()
 
 
-class UserSignupViewset(CreateModelMixin, GenericViewSet):
+class UserSignupView(views.APIView):
     """
     Получить код подтверждения на переданный email.
     Права доступа: Доступно без токена.
     Использовать имя 'me' в качестве username запрещено.
     Поля email и username должны быть уникальными.
     """
-    serializer_class = UserSignupSerializer
-    queryset = User.objects.all()
     permission_classes = (permissions.AllowAny, )
 
-    def perform_create(self, serializer):
+    def post(self, request):
+        serializer = UserSignupSerializer(data=request.data)
 
-        if serializer.is_valid(raise_exception=True):
-            username = serializer.validated_data['username']
-            email = serializer.validated_data['email']
-            user, created = User.objects.get_or_create(username=username,
-                                                       email=email)
+        serializer.is_valid(raise_exception=True)
+        username = serializer.validated_data['username']
+        email = serializer.validated_data['email']
+        user, created = User.objects.get_or_create(username=username,
+                                                   email=email)
 
-            alphabet = string.ascii_letters + string.digits
-            password = ''.join(secrets.choice(alphabet) for i in range(20))
+        alphabet = string.ascii_letters + string.digits
+        password = ''.join(secrets.choice(alphabet) for i in range(20))
 
-            user.set_password(password)
-            user.save()
+        user.set_password(password)
+        user.save()
 
-            send_mail(
-                '"YAMDB". Registration confirmation',  # "Тема"
-                (f'Уважаемый {user.username},'
-                 f' ваш код подтверждения: {password}.'),  # "Текст"
-                'admin@yamdb.com',  # "От кого"
-                [f'{user.email}'],  # "Кому"
-                fail_silently=False,
-            )
+        send_mail(
+            '"YAMDB". Registration confirmation',  # "Тема"
+            f'{password}',  # "Текст"
+            'admin@yamdb.com',  # "От кого"
+            [f'{user.email}'],  # "Кому"
+            fail_silently=False,
+        )
+
+        return Response(serializer.data, status=HTTPStatus.OK)
 
 
-class APIGetToken(views.APIView):
+class GetTokenView(views.APIView):
     """
     Запрос токена для зарегистрированного пользователя.
     1. POST-запрос с обязательными параметрами 'username' и 'confirmation_id'
@@ -194,8 +197,8 @@ class APIGetToken(views.APIView):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            token = SlidingToken.for_user(user)
-            response = {'token': str(token)}
+            token = RefreshToken.for_user(user)
+            response = {'token': str(token.access_token)}
 
             return Response(response)
-        raise exceptions.AuthenticationFailed('Check your confirmation_id')
+        raise exceptions.NotAuthenticated('Check your confirmation_id')
