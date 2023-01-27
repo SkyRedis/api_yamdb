@@ -68,7 +68,7 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     def validate(self, attrs):
-        if attrs['username'] == 'me':
+        if 'username' in attrs and attrs['username'] == 'me':
             raise exceptions.ValidationError('Do not use "me" as username')
         return super().validate(attrs)
 
@@ -90,7 +90,7 @@ class TokenRequestSerializer(serializers.Serializer):
     2. Аутентифицированному пользователю возвращается токен: Bearer.
     """
     username = serializers.CharField(required=True)
-    confirmation_id = serializers.CharField(required=True)
+    confirmation_code = serializers.CharField(required=True)
 
     def validate(self, attrs):
         try:
