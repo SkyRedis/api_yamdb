@@ -29,9 +29,6 @@ class UserSignupSerializer(serializers.ModelSerializer):
         user = User.objects.filter(username=attrs['username'],
                                    email=attrs['email'])
         if user.exists():
-            """if user[0].has_usable_password():
-                raise exceptions.ValidationError(
-                    {'username': 'User is already registered'})"""
             return super().validate(attrs)
 
         if User.objects.filter(username=attrs['username']).exists():
@@ -135,7 +132,8 @@ class TitleListSerializer(serializers.ModelSerializer):
             title_id=obj.id
         )
         rating = reviews.aggregate(Avg('score'))
-        return int(list(rating.values())[0])
+        return rating
+        #return int(list(rating.values())[0])
 
 
 class TitleCreateSerializer(serializers.ModelSerializer):
@@ -147,20 +145,20 @@ class TitleCreateSerializer(serializers.ModelSerializer):
         slug_field='slug',
         queryset=Category.objects.all()
     )
-    rating = serializers.SerializerMethodField()
+    #rating = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
-            'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
+            'id', 'name', 'year', 'description', 'genre', 'category'
         )
         model = Title
 
-    def get_rating(self, obj):
+    """def get_rating(self, obj):
         reviews = Review.objects.all().filter(
             title_id=obj.id
         )
         rating = reviews.aggregate(Avg('score'))
-        return int(list(rating.values())[0])
+        return int(list(rating.values())[0])"""
 
 
 class CommentSerializer(serializers.ModelSerializer):

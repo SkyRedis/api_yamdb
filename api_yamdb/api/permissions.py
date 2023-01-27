@@ -8,6 +8,7 @@ class Titles(permissions.BasePermission):
             return (user.role == 'user'
                     and request.method in permissions.SAFE_METHODS
                     or user.role == 'moderator'
+                    and request.method in permissions.SAFE_METHODS
                     or user.role == 'admin'
                     or user.is_superuser)
         except AttributeError:
@@ -16,8 +17,7 @@ class Titles(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         try:
             user = request.user
-            return (request.user.role == 'user' and request.user == obj.owner
-                    or user.role == 'moderator'
+            return (user.role == 'user' and request.user == obj.author
                     or user.role == 'admin'
                     or user.is_superuser)
         except AttributeError:
@@ -40,12 +40,15 @@ class Categories(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         try:
             user = request.user
-            return (request.user.role == 'user' and request.user == obj.owner
-                    or user.role == 'moderator' and request.user == obj.owner
-                    or user.role == 'admin'
-                    or user.is_superuser)
+            return (request.method not in permissions.SAFE_METHODS
+                    and (user.role == 'user'
+                         and request.user == obj.author
+                         or user.role == 'moderator'
+                         and request.user == obj.author
+                         or user.role == 'admin'
+                         or user.is_superuser))
         except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+            return False
 
 
 class Genres(permissions.BasePermission):
@@ -64,10 +67,13 @@ class Genres(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         try:
             user = request.user
-            return (request.user.role == 'user' and request.user == obj.owner
-                    or user.role == 'moderator' and request.user == obj.owner
-                    or user.role == 'admin'
-                    or user.is_superuser)
+            return (request.method not in permissions.SAFE_METHODS
+                    and (user.role == 'user'
+                         and request.user == obj.author
+                         or user.role == 'moderator'
+                         and request.user == obj.author
+                         or user.role == 'admin'
+                         or user.is_superuser))
         except AttributeError:
             return (request.method in permissions.SAFE_METHODS)
 
@@ -86,7 +92,7 @@ class Reviews(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         try:
             user = request.user
-            return (request.user.role == 'user' and request.user == obj.owner
+            return (request.user.role == 'user' and request.user == obj.author
                     or user.role == 'moderator'
                     or user.role == 'admin'
                     or user.is_superuser)
@@ -108,12 +114,22 @@ class Comments(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         try:
             user = request.user
-            return (request.user.role == 'user' and request.user == obj.owner
+            return (request.user.role == 'user' and request.user == obj.author
                     or user.role == 'moderator'
                     or user.role == 'admin'
                     or user.is_superuser)
         except AttributeError:
             return (request.method in permissions.SAFE_METHODS)
+
+
+class Users(permissions.BasePermission):
+    def has_permission(self, request, view):
+        try:
+            user = request.user
+            return (user.role == 'admin'
+                    or user.is_superuser)
+        except AttributeError:
+            return False
 
 
 class IsAdmin(permissions.BasePermission):

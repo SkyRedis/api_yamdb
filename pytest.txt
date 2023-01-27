@@ -1,0 +1,1062 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.0, pytest-6.2.4, py-1.11.0, pluggy-0.13.1 -- C:\Users\Alexander\YP\Dev\api_yamdb\venv\Scripts\python.exe
+django: settings: api_yamdb.settings (from ini)
+rootdir: C:\Users\Alexander\YP\Dev\api_yamdb, configfile: pytest.ini, testpaths: tests/
+plugins: django-4.4.0, pythonpath-0.7.3
+collecting ... collected 77 items
+
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_nodata_signup PASSED [  1%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_invalid_data_signup PASSED [  2%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_singup_length_and_simbols_validation[data0-messege0] PASSED [  3%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_singup_length_and_simbols_validation[data1-messege1] PASSED [  5%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_singup_length_and_simbols_validation[data2-messege2] PASSED [  6%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_valid_data_user_signup PASSED [  7%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_valid_data_admin_create_user PASSED [  9%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_admin_create_user_length_and_simbols_validation[data0-messege0] PASSED [ 10%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_admin_create_user_length_and_simbols_validation[data1-messege1] PASSED [ 11%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_admin_create_user_length_and_simbols_validation[data2-messege2] PASSED [ 12%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_admin_create_user_length_and_simbols_validation[data3-messege3] PASSED [ 14%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_admin_create_user_length_and_simbols_validation[data4-messege4] PASSED [ 15%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_obtain_jwt_token_invalid_data PASSED [ 16%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_registration_me_username_restricted PASSED [ 18%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_00_registration_same_email_restricted PASSED [ 19%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_get_new_confirmation_code_for_existing_user PASSED [ 20%]
+tests/test_00_user_registration.py::Test00UserRegistration::test_get_confirmation_code_for_user_created_by_admin PASSED [ 22%]
+tests/test_01_users.py::Test01UserAPI::test_01_users_not_authenticated PASSED [ 23%]
+tests/test_01_users.py::Test01UserAPI::test_02_users_username_not_authenticated PASSED [ 24%]
+tests/test_01_users.py::Test01UserAPI::test_03_users_me_not_authenticated PASSED [ 25%]
+tests/test_01_users.py::Test01UserAPI::test_04_users_get_admin PASSED    [ 27%]
+tests/test_01_users.py::Test01UserAPI::test_04_02_users_get_search PASSED [ 28%]
+tests/test_01_users.py::Test01UserAPI::test_04_01_users_get_admin_only PASSED [ 29%]
+tests/test_01_users.py::Test01UserAPI::test_05_01_users_post_admin_bad_requests PASSED [ 31%]
+tests/test_01_users.py::Test01UserAPI::test_05_02_users_post_admin_user_creation[data0-] PASSED [ 32%]
+tests/test_01_users.py::Test01UserAPI::test_05_02_users_post_admin_user_creation[data1-без указания роли нового пользователя ] PASSED [ 33%]
+tests/test_01_users.py::Test01UserAPI::test_05_03_users_post_response_has_data PASSED [ 35%]
+tests/test_01_users.py::Test01UserAPI::test_05_04_users_post_user_superuser PASSED [ 36%]
+tests/test_01_users.py::Test01UserAPI::test_06_users_username_get_admin PASSED [ 37%]
+tests/test_01_users.py::Test01UserAPI::test_06_users_username_get_not_admin PASSED [ 38%]
+tests/test_01_users.py::Test01UserAPI::test_07_01_users_username_patch_admin PASSED [ 40%]
+tests/test_01_users.py::Test01UserAPI::test_07_02_users_username_patch_moderator PASSED [ 41%]
+tests/test_01_users.py::Test01UserAPI::test_07_03_users_username_patch_user PASSED [ 42%]
+tests/test_01_users.py::Test01UserAPI::test_07_05_users_username_put_not_allowed PASSED [ 44%]
+tests/test_01_users.py::Test01UserAPI::test_08_01_users_username_delete_admin PASSED [ 45%]
+tests/test_01_users.py::Test01UserAPI::test_08_02_users_username_delete_moderator PASSED [ 46%]
+tests/test_01_users.py::Test01UserAPI::test_08_03_users_username_delete_user PASSED [ 48%]
+tests/test_01_users.py::Test01UserAPI::test_08_04_users_username_delete_superuser PASSED [ 49%]
+tests/test_01_users.py::Test01UserAPI::test_09_users_me_get PASSED       [ 50%]
+tests/test_01_users.py::Test01UserAPI::test_09_02_users_me_delete_not_allowed PASSED [ 51%]
+tests/test_01_users.py::Test01UserAPI::test_10_01_users_me_patch PASSED  [ 53%]
+tests/test_01_users.py::Test01UserAPI::test_10_02_users_me_has_field_validation[data0-messege0] PASSED [ 54%]
+tests/test_01_users.py::Test01UserAPI::test_10_02_users_me_has_field_validation[data1-messege1] PASSED [ 55%]
+tests/test_01_users.py::Test01UserAPI::test_10_02_users_me_has_field_validation[data2-messege2] PASSED [ 57%]
+tests/test_01_users.py::Test01UserAPI::test_10_02_users_me_has_field_validation[data3-messege3] PASSED [ 58%]
+tests/test_01_users.py::Test01UserAPI::test_10_02_users_me_has_field_validation[data4-messege4] PASSED [ 59%]
+tests/test_01_users.py::Test01UserAPI::test_10_03_users_me_patch_change_role_not_allowed PASSED [ 61%]
+tests/test_02_category.py::Test02CategoryAPI::test_01_category_not_auth PASSED [ 62%]
+tests/test_02_category.py::Test02CategoryAPI::test_02_category_with_admin_user FAILED [ 63%]
+tests/test_02_category.py::Test02CategoryAPI::test_03_category_fields_validation[data0-massage0] PASSED [ 64%]
+tests/test_02_category.py::Test02CategoryAPI::test_03_category_fields_validation[data1-massage1] PASSED [ 66%]
+tests/test_02_category.py::Test02CategoryAPI::test_03_category_fields_validation[data2-massage2] PASSED [ 67%]
+tests/test_02_category.py::Test02CategoryAPI::test_04_category_delete_admin FAILED [ 68%]
+tests/test_02_category.py::Test02CategoryAPI::test_05_category_check_permission_admin PASSED [ 70%]
+tests/test_03_genre.py::Test03GenreAPI::test_01_genre_not_auth PASSED    [ 71%]
+tests/test_03_genre.py::Test03GenreAPI::test_02_genre FAILED             [ 72%]
+tests/test_03_genre.py::Test03GenreAPI::test_03_category_fields_validation[data0-massage0] PASSED [ 74%]
+tests/test_03_genre.py::Test03GenreAPI::test_03_category_fields_validation[data1-massage1] PASSED [ 75%]
+tests/test_03_genre.py::Test03GenreAPI::test_03_category_fields_validation[data2-massage2] PASSED [ 76%]
+tests/test_03_genre.py::Test03GenreAPI::test_04_genres_delete FAILED     [ 77%]
+tests/test_03_genre.py::Test03GenreAPI::test_05_genres_check_permission PASSED [ 79%]
+tests/test_04_title.py::Test04TitleAPI::test_01_title_not_auth PASSED    [ 80%]
+tests/test_04_title.py::Test04TitleAPI::test_02_title_admin FAILED       [ 81%]
+tests/test_04_title.py::Test04TitleAPI::test_03_titles_detail FAILED     [ 83%]
+tests/test_04_title.py::Test04TitleAPI::test_04_titles_name_length_validation PASSED [ 84%]
+tests/test_04_title.py::Test04TitleAPI::test_05_titles_check_permission FAILED [ 85%]
+tests/test_05_review.py::Test05ReviewAPI::test_01_review_not_auth PASSED [ 87%]
+tests/test_05_review.py::Test05ReviewAPI::test_02_review_post FAILED     [ 88%]
+tests/test_05_review.py::Test05ReviewAPI::test_03_review_detail_get PASSED [ 89%]
+tests/test_05_review.py::Test05ReviewAPI::test_04_review_detail_user PASSED [ 90%]
+tests/test_05_review.py::Test05ReviewAPI::test_05_reviews_detail_moderator_and_admin FAILED [ 92%]
+tests/test_06_comment.py::Test06CommentAPI::test_01_comment_not_auth PASSED [ 93%]
+tests/test_06_comment.py::Test06CommentAPI::test_02_comment PASSED       [ 94%]
+tests/test_06_comment.py::Test06CommentAPI::test_03_comment_detail_get PASSED [ 96%]
+tests/test_06_comment.py::Test06CommentAPI::test_04_comment_detail__user_patch_delete PASSED [ 97%]
+tests/test_06_comment.py::Test06CommentAPI::test_05_comment_detail_admin_and_moderator PASSED [ 98%]
+tests/test_06_comment.py::Test06CommentAPI::test_06_comment_detail_not_auth PASSED [100%]
+
+================================== FAILURES ===================================
+_____________ Test02CategoryAPI.test_02_category_with_admin_user ______________
+
+self = <tests.test_02_category.Test02CategoryAPI object at 0x000001F570F6EB90>
+admin_client = <rest_framework.test.APIClient object at 0x000001F570F8FAD0>
+
+    def test_02_category_with_admin_user(self, admin_client):
+        categories_count = 0
+    
+        url = '/api/v1/categories/'
+        data = {}
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, (
+            f'Если POST-запрос администратора, отправленный к `{url}`, '
+            'содержит некорректные данные - должен вернуться ответ со '
+            'статусом 400.'
+        )
+    
+        data = {
+            'name': 'Фильм',
+            'slug': 'films'
+        }
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.CREATED, (
+            f'Если POST-запрос администратора, отправленный к `{url}`, '
+            'содержит корректные данные - должен вернуться ответ со статусом '
+            '201.'
+        )
+        categories_count += 1
+    
+        data = {
+            'name': 'Новые фильмы',
+            'slug': 'films'
+        }
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, (
+            f'Если в POST-запросе администратора к `{url}` '
+            'передан уже существующий `slug` - должен вернуться ответ со '
+            'статусом 400.'
+        )
+    
+        post_data = {
+            'name': 'Книги',
+            'slug': 'books'
+        }
+        response = admin_client.post(url, data=post_data)
+        assert response.status_code == HTTPStatus.CREATED, (
+            f'Если POST-запрос администратора к `{url}` '
+            'содержит корректные данные - должен вернуться ответ со статусом '
+            '201.'
+        )
+        categories_count += 1
+    
+        response = admin_client.get(url)
+        assert response.status_code == HTTPStatus.OK, (
+            f'Проверьте, что при GET-запросе к `{url}` возвращается статус '
+            '200.'
+        )
+        data = response.json()
+>       check_pagination(url, data, categories_count, post_data)
+
+tests\test_02_category.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+url = '/api/v1/categories/'
+respons_data = {'count': 2, 'next': None, 'previous': None, 'results': [{'id': 1, 'name': 'Фильм', 'slug': 'films'}, {'id': 2, 'name': 'Книги', 'slug': 'books'}]}
+expected_count = 2, post_data = {'name': 'Книги', 'slug': 'books'}
+
+    def check_pagination(url, respons_data, expected_count, post_data=None):
+        expected_keys = ('count', 'next', 'previous', 'results')
+        for key in expected_keys:
+            assert key in respons_data, (
+                f'Проверьте, что для эндпоинта `{url}` настроена '
+                f'пагинация и ответ на GET-запрос содержит ключ {key}.'
+            )
+        assert respons_data['count'] == expected_count, (
+            f'Проверьте, что для эндпоинта `{url}` настроена '
+            f'пагинация. Сейчас ключ `count` содержит некорректное значение.'
+        )
+        assert isinstance(respons_data['results'], list), (
+            f'Проверьте, что для эндпоинта `{url}` настроена '
+            'пагинация. Значением ключа `results` должен быть список.'
+        )
+        assert len(respons_data['results']) == expected_count, (
+            f'Проверьте, что для эндпоинта `{url}` настроена пагинация. Сейчас '
+            'ключ `results` содержит некорректное количество элементов.'
+        )
+        if post_data:
+>           assert post_data in respons_data['results'], (
+                f'Проверьте, что для эндпоинта `{url}` настроена пагинация. '
+                'Значение параметра `results` отсутствует или содержит '
+                'некорректную информацию о существующем объекте.'
+            )
+E           AssertionError: Проверьте, что для эндпоинта `/api/v1/categories/` настроена пагинация. Значение параметра `results` отсутствует или содержит некорректную информацию о существующем объекте.
+
+tests\utils.py:125: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Bad Request: /api/v1/categories/
+WARNING  django.request:log.py:224 Bad Request: /api/v1/categories/
+_______________ Test02CategoryAPI.test_04_category_delete_admin _______________
+
+self = <tests.test_02_category.Test02CategoryAPI object at 0x000001F571102C50>
+admin_client = <rest_framework.test.APIClient object at 0x000001F5710E6490>
+
+    def test_04_category_delete_admin(self, admin_client):
+        category_1, category_2 = create_categories(admin_client)
+        response = admin_client.delete(
+            f'/api/v1/categories/{category_1["slug"]}/'
+        )
+        assert response.status_code == HTTPStatus.NO_CONTENT, (
+            'Проверьте, что DELETE-запрос администратора к '
+            '`/api/v1/categories/{slug}/` возвращает ответ со статусом 204.'
+        )
+        response = admin_client.get('/api/v1/categories/')
+        test_data = response.json()['results']
+        assert len(test_data) == 1, (
+            'Проверьте, что DELETE-запрос администратора к '
+            '`/api/v1/categories/{slug}/` удаляет категорию.'
+        )
+    
+        response = admin_client.get(
+            f'/api/v1/categories/{category_2["slug"]}/'
+        )
+>       assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED, (
+            'Проверьте, что GET-запросы к `/api/v1/categories/{slug}/` '
+            'запрещены и возвращают ответ со статусом 405.'
+        )
+E       AssertionError: Проверьте, что GET-запросы к `/api/v1/categories/{slug}/` запрещены и возвращают ответ со статусом 405.
+E       assert 403 == <HTTPStatus.METHOD_NOT_ALLOWED: 405>
+E         +403
+E         -<HTTPStatus.METHOD_NOT_ALLOWED: 405>
+
+tests\test_02_category.py:113: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Forbidden: /api/v1/categories/books/
+________________________ Test03GenreAPI.test_02_genre _________________________
+
+self = <tests.test_03_genre.Test03GenreAPI object at 0x000001F5711DF090>
+admin_client = <rest_framework.test.APIClient object at 0x000001F571133850>
+client = <django.test.client.Client object at 0x000001F5711C0850>
+
+    def test_02_genre(self, admin_client, client):
+        genres_count = 0
+        url = '/api/v1/genres/'
+    
+        data = {}
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, (
+            f'Если POST-запрос администратора к `{url}` '
+            'содержит некорректные данные - должен вернуться ответ со '
+            'статусом 400.'
+        )
+    
+        data = {'name': 'Ужасы', 'slug': 'horror'}
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.CREATED, (
+            f'Если POST-запрос администратора к `{url}` содержит корректные '
+            'данные - должен вернуться ответ со статусом 201.'
+        )
+        genres_count += 1
+    
+        data = {'name': 'Триллер', 'slug': 'horror'}
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, (
+            f'Если в POST-запросе администратора, отправленном к `{url}`, '
+            'передан уже существующий `slug` - должен вернуться ответ со '
+            'статусом 400.'
+        )
+    
+        post_data = {'name': 'Комедия', 'slug': 'comedy'}
+        response = admin_client.post(url, data=post_data)
+        assert response.status_code == HTTPStatus.CREATED, (
+            f'Если POST-запрос администратора, отправленный к `{url}`, '
+            'содержит корректные данные - должен вернуться ответ со статусом '
+            '201.'
+        )
+        genres_count += 1
+    
+        response = client.get(url)
+        assert response.status_code == HTTPStatus.OK, (
+            'Проверьте, что GET-запрос неавторизованного пользователя к '
+            f'`{url}` возвращает ответ со статусом 200.'
+        )
+        data = response.json()
+>       check_pagination(url, data, genres_count, post_data)
+
+tests\test_03_genre.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+url = '/api/v1/genres/'
+respons_data = {'count': 2, 'next': None, 'previous': None, 'results': [{'id': 1, 'name': 'Ужасы', 'slug': 'horror'}, {'id': 2, 'name': 'Комедия', 'slug': 'comedy'}]}
+expected_count = 2, post_data = {'name': 'Комедия', 'slug': 'comedy'}
+
+    def check_pagination(url, respons_data, expected_count, post_data=None):
+        expected_keys = ('count', 'next', 'previous', 'results')
+        for key in expected_keys:
+            assert key in respons_data, (
+                f'Проверьте, что для эндпоинта `{url}` настроена '
+                f'пагинация и ответ на GET-запрос содержит ключ {key}.'
+            )
+        assert respons_data['count'] == expected_count, (
+            f'Проверьте, что для эндпоинта `{url}` настроена '
+            f'пагинация. Сейчас ключ `count` содержит некорректное значение.'
+        )
+        assert isinstance(respons_data['results'], list), (
+            f'Проверьте, что для эндпоинта `{url}` настроена '
+            'пагинация. Значением ключа `results` должен быть список.'
+        )
+        assert len(respons_data['results']) == expected_count, (
+            f'Проверьте, что для эндпоинта `{url}` настроена пагинация. Сейчас '
+            'ключ `results` содержит некорректное количество элементов.'
+        )
+        if post_data:
+>           assert post_data in respons_data['results'], (
+                f'Проверьте, что для эндпоинта `{url}` настроена пагинация. '
+                'Значение параметра `results` отсутствует или содержит '
+                'некорректную информацию о существующем объекте.'
+            )
+E           AssertionError: Проверьте, что для эндпоинта `/api/v1/genres/` настроена пагинация. Значение параметра `results` отсутствует или содержит некорректную информацию о существующем объекте.
+
+tests\utils.py:125: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Bad Request: /api/v1/genres/
+WARNING  django.request:log.py:224 Bad Request: /api/v1/genres/
+____________________ Test03GenreAPI.test_04_genres_delete _____________________
+
+self = <tests.test_03_genre.Test03GenreAPI object at 0x000001F5712DD190>
+admin_client = <rest_framework.test.APIClient object at 0x000001F5712A7AD0>
+
+    def test_04_genres_delete(self, admin_client):
+        genres = create_genre(admin_client)
+        response = admin_client.delete(f'/api/v1/genres/{genres[0]["slug"]}/')
+        assert response.status_code == HTTPStatus.NO_CONTENT, (
+            'Проверьте, что DELETE-запрос администратора к '
+            '`/api/v1/genres/{slug}/` возвращает ответ со  статусом 204.'
+        )
+        response = admin_client.get('/api/v1/genres/')
+        test_data = response.json()['results']
+        assert len(test_data) == len(genres) - 1, (
+            'Проверьте, что DELETE-запрос администратора к '
+            '`/api/v1/genres/{slug}/` удаляет жанр из БД.'
+        )
+        response = admin_client.get(f'/api/v1/genres/{genres[0]["slug"]}/')
+>       assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED, (
+            'Проверьте, что GET-запрос администратора к '
+            '`/api/v1/genres/{slug}/` возвращает ответ со статусом 405.'
+        )
+E       AssertionError: Проверьте, что GET-запрос администратора к `/api/v1/genres/{slug}/` возвращает ответ со статусом 405.
+E       assert 404 == <HTTPStatus.METHOD_NOT_ALLOWED: 405>
+E         +404
+E         -<HTTPStatus.METHOD_NOT_ALLOWED: 405>
+
+tests\test_03_genre.py:98: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Not Found: /api/v1/genres/horror/
+_____________________ Test04TitleAPI.test_02_title_admin ______________________
+
+self = <tests.test_04_title.Test04TitleAPI object at 0x000001F5713430D0>
+admin_client = <rest_framework.test.APIClient object at 0x000001F571341B90>
+client = <django.test.client.Client object at 0x000001F5713416D0>
+
+    def test_02_title_admin(self, admin_client, client):
+        genres = create_genre(admin_client)
+        categories = create_categories(admin_client)
+        url = '/api/v1/titles/'
+        title_count = 0
+    
+        assert_msg = (
+            f'Если POST-запрос администратора к `{url}` '
+            'содержит некорректные данные - должен вернуться ответ со '
+            'статусом 400.'
+        )
+        data = {}
+        response = admin_client.post(url, data=data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, assert_msg
+    
+        invalid_data = {
+            'name': 'Угнать за 60 секунд',
+            'year': 'дветыщи',
+            'genre': [genres[1]['slug']],
+            'category': categories[1]['slug'],
+            'description': 'Угонял машины всю ночь и немного подустал.'
+        }
+        response = admin_client.post(url, data=invalid_data)
+        assert response.status_code == HTTPStatus.BAD_REQUEST, assert_msg
+    
+        post_data_1 = {
+            'name': 'Мост через реку Квай',
+            'year': 1957,
+            'genre': [genres[0]['slug'], genres[1]['slug']],
+            'category': categories[0]['slug'],
+            'description': 'Рон Свонсон рекомендует.'
+        }
+        response = admin_client.post(url, data=post_data_1)
+        assert response.status_code == HTTPStatus.CREATED, (
+            f'Если POST-запрос администратора к `{url}` '
+            'содержит корректные данные - должен вернуться ответ со статусом '
+            '201.'
+        )
+        title_count += 1
+    
+        post_data_2 = {
+            'name': 'Хороший, плохой, злой.',
+            'year': 1966,
+            'genre': [genres[2]['slug']],
+            'category': categories[1]['slug'],
+            'description': 'Угадай ревьюера по названию фильма.'
+        }
+        response = admin_client.post(url, data=post_data_2)
+        assert response.status_code == HTTPStatus.CREATED, (
+            f'Если POST-запрос администратора к `{url}` '
+            'содержит корректные данные - должен вернуться ответ со статусом '
+            '201.'
+        )
+        title_count += 1
+        assert isinstance(response.json().get('id'), int), (
+            f'Проверьте, при POST-запросе администратора к `{url}` '
+            'в ответе возвращаются данные созданного объекта. Сейчас поле '
+            '`id` отсутствует или не является целым числом.'
+        )
+    
+        response = client.get(url)
+        assert response.status_code == HTTPStatus.OK, (
+            'Проверьте, что GET-запрос неавторизованного пользователя к '
+            f'`{url}` возвращает ответ со статусом 200.'
+        )
+        data = response.json()
+        check_pagination(url, data, title_count)
+    
+        expected_title_names = {post_data_1['name'], post_data_2['name']}
+        title_names = {element.get('name') for element in data['results']}
+        assert len(expected_title_names.intersection(title_names)) == 2, (
+            f'Проверьте, что для эндпоинта `{url}` настроена пагинация. '
+            'Сейчас значение параметра `results` отсутствует или содержит '
+            'некорректную информацию о существующих объектах.'
+        )
+    
+        for element in data['results']:
+            if element['name'] == post_data_1['name']:
+                title = element
+    
+>       assert title.get('rating') is None, (
+            'Проверьте, что при GET-запросе неавторизованного '
+            f'пользователя к `{url}` возвращается информация о рейтинге '
+            'произведений. Если отзывов о произведении нет - значением '
+            'поля `rating` должено быть `None`.'
+        )
+E       AssertionError: Проверьте, что при GET-запросе неавторизованного пользователя к `/api/v1/titles/` возвращается информация о рейтинге произведений. Если отзывов о произведении нет - значением поля `rating` должено быть `None`.
+E       assert {'score__avg': None} is None
+E        +  where {'score__avg': None} = <built-in method get of dict object at 0x000001F56FBC5F40>('rating')
+E        +    where <built-in method get of dict object at 0x000001F56FBC5F40> = {'category': 'Фильм', 'description': 'Рон Свонсон рекомендует.', 'genre': ['Ужасы', 'Комедия'], 'id': 1, ...}.get
+
+tests\test_04_title.py:103: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Bad Request: /api/v1/titles/
+WARNING  django.request:log.py:224 Bad Request: /api/v1/titles/
+____________________ Test04TitleAPI.test_03_titles_detail _____________________
+
+self = <tests.test_04_title.Test04TitleAPI object at 0x000001F571129FD0>
+client = <django.test.client.Client object at 0x000001F5712E9190>
+admin_client = <rest_framework.test.APIClient object at 0x000001F5711E0F10>
+
+    def test_03_titles_detail(self, client, admin_client):
+        titles, categories, genres = create_titles(admin_client)
+        response = client.get(f'/api/v1/titles/{titles[0]["id"]}/')
+        assert response.status_code != HTTPStatus.NOT_FOUND, (
+            'Эндпоинт `/api/v1/titles/{title_id}/` не найден, проверьте '
+            'настройки в *urls.py*.'
+        )
+        assert response.status_code == HTTPStatus.OK, (
+            'Проверьте, что GET-запрос неавторизованного пользователя к '
+            '`/api/v1/titles/{title_id}/` возвращает ответ со статусом 200.'
+        )
+        data = response.json()
+        assert isinstance(data.get('id'), int), (
+            'Поле `id` отсутствует или содержит некорректное значение '
+            'в ответе на GET-запрос неавторизованного пользователя к '
+            '`/api/v1/titles/{title_id}/`.'
+        )
+>       assert data.get('category') == categories[0], (
+            'Поле `category` отсутствует или содержит некорректное значение '
+            'в ответе на GET-запрос неавторизованного пользователя к '
+            '`/api/v1/titles/{title_id}/`.'
+        )
+E       AssertionError: Поле `category` отсутствует или содержит некорректное значение в ответе на GET-запрос неавторизованного пользователя к `/api/v1/titles/{title_id}/`.
+E       assert 'films' == {'name': 'Фильм', 'slug': 'films'}
+E         +'films'
+E         -{'name': 'Фильм', 'slug': 'films'}
+
+tests\test_04_title.py:199: AssertionError
+_______________ Test04TitleAPI.test_05_titles_check_permission ________________
+
+self = <tests.test_04_title.Test04TitleAPI object at 0x000001F570CB5410>
+client = <django.test.client.Client object at 0x000001F5712DE910>
+user_client = <rest_framework.test.APIClient object at 0x000001F5712E9C90>
+moderator_client = <rest_framework.test.APIClient object at 0x000001F5711FC7D0>
+admin_client = <rest_framework.test.APIClient object at 0x000001F5712CBA10>
+
+    def test_05_titles_check_permission(self, client, user_client,
+                                        moderator_client, admin_client):
+        titles, categories, genres = create_titles(admin_client)
+        url = '/api/v1/titles/'
+        data = {
+            'name': 'Зловещие мертвецы',
+            'year': 1981,
+            'genre': [genres[2]['slug'], genres[1]['slug']],
+            'category': categories[0]['slug'],
+            'description': 'This Is My Boomstick! - Ash'
+        }
+        check_permissions(client, url, data,
+                          'неавторизованного пользователя', titles,
+                          HTTPStatus.UNAUTHORIZED)
+        check_permissions(user_client, url, data,
+                          'пользователя с ролью `user`', titles,
+                          HTTPStatus.FORBIDDEN)
+>       check_permissions(moderator_client, url, data, 'модератора',
+                          titles, HTTPStatus.FORBIDDEN)
+
+tests\test_04_title.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <rest_framework.test.APIClient object at 0x000001F5711FC7D0>
+url = '/api/v1/titles/'
+data = {'category': 'films', 'description': 'This Is My Boomstick! - Ash', 'genre': ['drama', 'comedy'], 'name': 'Зловещие мертвецы', ...}
+user_role = 'модератора'
+objects = [{'category': 'films', 'description': 'I`ll be back', 'genre': ['horror', 'comedy'], 'id': 6, ...}, {'category': 'books', 'description': 'Yippie ki yay...', 'genre': ['drama'], 'id': 7, ...}]
+expected_status = <HTTPStatus.FORBIDDEN: 403>
+
+    def check_permissions(client, url, data, user_role, objects,
+                          expected_status):
+        sufix = 'slug' if 'slug' in objects[0] else 'id'
+    
+        response = client.post(url, data=data)
+>       assert response.status_code == expected_status, (
+            f'Проверьте, что POST-запрос {user_role} к `{url}` возвращает ответ '
+            f'со статусом {expected_status}.'
+        )
+E       AssertionError: Проверьте, что POST-запрос модератора к `/api/v1/titles/` возвращает ответ со статусом 403.
+
+tests\utils.py:137: AssertionError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Unauthorized: /api/v1/titles/
+WARNING  django.request:log.py:224 Unauthorized: /api/v1/titles/6/
+WARNING  django.request:log.py:224 Unauthorized: /api/v1/titles/6/
+WARNING  django.request:log.py:224 Forbidden: /api/v1/titles/
+WARNING  django.request:log.py:224 Forbidden: /api/v1/titles/6/
+WARNING  django.request:log.py:224 Forbidden: /api/v1/titles/6/
+_____________________ Test05ReviewAPI.test_02_review_post _____________________
+
+self = <django.db.backends.utils.CursorWrapper object at 0x000001F571570910>
+sql = 'INSERT INTO "reviews_review" ("author_id", "title_id_id", "text", "score", "pub_date") VALUES (%s, %s, %s, %s, %s)'
+params = [84, 11, 'Шляпа', 1, '2023-01-27 16:21:36.797675']
+ignored_wrapper_args = (False, {'connection': <django.db.backends.sqlite3.base.DatabaseWrapper object at 0x000001F56E3814D0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x000001F571570910>})
+
+    def _execute(self, sql, params, *ignored_wrapper_args):
+        self.db.validate_no_broken_transaction()
+        with self.db.wrap_database_errors:
+            if params is None:
+                # params default might be backend specific.
+                return self.cursor.execute(sql)
+            else:
+>               return self.cursor.execute(sql, params)
+
+venv\Lib\site-packages\django\db\backends\utils.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x000001F57074D0A0>
+query = 'INSERT INTO "reviews_review" ("author_id", "title_id_id", "text", "score", "pub_date") VALUES (?, ?, ?, ?, ?)'
+params = [84, 11, 'Шляпа', 1, '2023-01-27 16:21:36.797675']
+
+    def execute(self, query, params=None):
+        if params is None:
+            return Database.Cursor.execute(self, query)
+        query = self.convert_query(query)
+>       return Database.Cursor.execute(self, query, params)
+E       sqlite3.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+
+venv\Lib\site-packages\django\db\backends\sqlite3\base.py:423: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_05_review.Test05ReviewAPI object at 0x000001F571560550>
+admin_client = <rest_framework.test.APIClient object at 0x000001F5714C7610>
+user_client = <rest_framework.test.APIClient object at 0x000001F571562110>
+moderator_client = <rest_framework.test.APIClient object at 0x000001F571562CD0>
+admin = <User: TestAdmin>
+
+    def test_02_review_post(self, admin_client, user_client,
+                            moderator_client, admin):
+        titles, _, _ = create_titles(admin_client)
+        title_0_reviews_count = 0
+    
+        data = {}
+        response = user_client.post(
+            f'/api/v1/titles/{titles[0]["id"]}/reviews/', data=data
+        )
+        assert response.status_code == HTTPStatus.BAD_REQUEST, (
+            'Если POST-запрос авторизованного пользователя к '
+            '`/api/v1/titles/{title_id}/reviews/` содержит некорректные '
+            'данные - должен вернуться ответ со статусом 400.'
+        )
+    
+        post_data = {
+            'text': 'Неочень',
+            'score': 5
+        }
+        create_single_review(
+            admin_client,
+            titles[0]["id"],
+            post_data['text'],
+            post_data['score']
+        )
+        title_0_reviews_count += 1
+    
+        data = {
+            'text': 'Шляпа',
+            'score': 1
+        }
+>       response = admin_client.post(
+            f'/api/v1/titles/{titles[0]["id"]}/reviews/', data=data
+        )
+
+tests\test_05_review.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+venv\Lib\site-packages\rest_framework\test.py:295: in post
+    response = super().post(
+venv\Lib\site-packages\rest_framework\test.py:209: in post
+    return self.generic('POST', path, data, content_type, **extra)
+venv\Lib\site-packages\rest_framework\test.py:233: in generic
+    return super().generic(
+venv\Lib\site-packages\django\test\client.py:473: in generic
+    return self.request(**r)
+venv\Lib\site-packages\rest_framework\test.py:285: in request
+    return super().request(**kwargs)
+venv\Lib\site-packages\rest_framework\test.py:237: in request
+    request = super().request(**kwargs)
+venv\Lib\site-packages\django\test\client.py:719: in request
+    self.check_exception(response)
+venv\Lib\site-packages\django\test\client.py:580: in check_exception
+    raise exc_value
+venv\Lib\site-packages\django\core\handlers\exception.py:47: in inner
+    response = get_response(request)
+venv\Lib\site-packages\django\core\handlers\base.py:181: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+venv\Lib\site-packages\django\views\decorators\csrf.py:54: in wrapped_view
+    return view_func(*args, **kwargs)
+venv\Lib\site-packages\rest_framework\viewsets.py:125: in view
+    return self.dispatch(request, *args, **kwargs)
+venv\Lib\site-packages\rest_framework\views.py:509: in dispatch
+    response = self.handle_exception(exc)
+venv\Lib\site-packages\rest_framework\views.py:469: in handle_exception
+    self.raise_uncaught_exception(exc)
+venv\Lib\site-packages\rest_framework\views.py:480: in raise_uncaught_exception
+    raise exc
+venv\Lib\site-packages\rest_framework\views.py:506: in dispatch
+    response = handler(request, *args, **kwargs)
+venv\Lib\site-packages\rest_framework\mixins.py:19: in create
+    self.perform_create(serializer)
+api_yamdb\api\views.py:75: in perform_create
+    serializer.save(author=self.request.user, title_id=title)
+venv\Lib\site-packages\rest_framework\serializers.py:205: in save
+    self.instance = self.create(validated_data)
+venv\Lib\site-packages\rest_framework\serializers.py:939: in create
+    instance = ModelClass._default_manager.create(**validated_data)
+venv\Lib\site-packages\django\db\models\manager.py:85: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+venv\Lib\site-packages\django\db\models\query.py:453: in create
+    obj.save(force_insert=True, using=self.db)
+venv\Lib\site-packages\django\db\models\base.py:726: in save
+    self.save_base(using=using, force_insert=force_insert,
+venv\Lib\site-packages\django\db\models\base.py:763: in save_base
+    updated = self._save_table(
+venv\Lib\site-packages\django\db\models\base.py:868: in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+venv\Lib\site-packages\django\db\models\base.py:906: in _do_insert
+    return manager._insert(
+venv\Lib\site-packages\django\db\models\manager.py:85: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+venv\Lib\site-packages\django\db\models\query.py:1270: in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+venv\Lib\site-packages\django\db\models\sql\compiler.py:1410: in execute_sql
+    cursor.execute(sql, params)
+venv\Lib\site-packages\django\db\backends\utils.py:66: in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+venv\Lib\site-packages\django\db\backends\utils.py:75: in _execute_with_wrappers
+    return executor(sql, params, many, context)
+venv\Lib\site-packages\django\db\backends\utils.py:79: in _execute
+    with self.db.wrap_database_errors:
+venv\Lib\site-packages\django\db\utils.py:90: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv\Lib\site-packages\django\db\backends\utils.py:84: in _execute
+    return self.cursor.execute(sql, params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x000001F57074D0A0>
+query = 'INSERT INTO "reviews_review" ("author_id", "title_id_id", "text", "score", "pub_date") VALUES (?, ?, ?, ?, ?)'
+params = [84, 11, 'Шляпа', 1, '2023-01-27 16:21:36.797675']
+
+    def execute(self, query, params=None):
+        if params is None:
+            return Database.Cursor.execute(self, query)
+        query = self.convert_query(query)
+>       return Database.Cursor.execute(self, query, params)
+E       django.db.utils.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+
+venv\Lib\site-packages\django\db\backends\sqlite3\base.py:423: IntegrityError
+------------------------------ Captured log call ------------------------------
+WARNING  django.request:log.py:224 Bad Request: /api/v1/titles/11/reviews/
+ERROR    django.request:log.py:224 Internal Server Error: /api/v1/titles/11/reviews/
+Traceback (most recent call last):
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\api_yamdb\api\views.py", line 75, in perform_create
+    serializer.save(author=self.request.user, title_id=title)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\serializers.py", line 205, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\serializers.py", line 939, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 726, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 763, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 868, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 906, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1410, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+_________ Test05ReviewAPI.test_05_reviews_detail_moderator_and_admin __________
+
+self = <django.db.backends.utils.CursorWrapper object at 0x000001F571B39350>
+sql = 'UPDATE "reviews_review" SET "author_id" = %s, "title_id_id" = %s, "text" = %s, "score" = %s, "pub_date" = %s WHERE "reviews_review"."id" = %s'
+params = (95, 17, 'Top score', 10, '2023-01-27 16:21:38.206526', 12)
+ignored_wrapper_args = (False, {'connection': <django.db.backends.sqlite3.base.DatabaseWrapper object at 0x000001F56E3814D0>, 'cursor': <django.db.backends.utils.CursorWrapper object at 0x000001F571B39350>})
+
+    def _execute(self, sql, params, *ignored_wrapper_args):
+        self.db.validate_no_broken_transaction()
+        with self.db.wrap_database_errors:
+            if params is None:
+                # params default might be backend specific.
+                return self.cursor.execute(sql)
+            else:
+>               return self.cursor.execute(sql, params)
+
+venv\Lib\site-packages\django\db\backends\utils.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x000001F5717819A0>
+query = 'UPDATE "reviews_review" SET "author_id" = ?, "title_id_id" = ?, "text" = ?, "score" = ?, "pub_date" = ? WHERE "reviews_review"."id" = ?'
+params = (95, 17, 'Top score', 10, '2023-01-27 16:21:38.206526', 12)
+
+    def execute(self, query, params=None):
+        if params is None:
+            return Database.Cursor.execute(self, query)
+        query = self.convert_query(query)
+>       return Database.Cursor.execute(self, query, params)
+E       sqlite3.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+
+venv\Lib\site-packages\django\db\backends\sqlite3\base.py:423: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_05_review.Test05ReviewAPI object at 0x000001F5717D60D0>
+admin_client = <rest_framework.test.APIClient object at 0x000001F5717F47D0>
+admin = <User: TestAdmin>
+user_client = <rest_framework.test.APIClient object at 0x000001F5717D75D0>
+user = <User: TestUser>
+moderator_client = <rest_framework.test.APIClient object at 0x000001F5717C8110>
+moderator = <User: TestModerator>
+
+    def test_05_reviews_detail_moderator_and_admin(self, admin_client, admin,
+                                                   user_client, user,
+                                                   moderator_client,
+                                                   moderator):
+        author_map = {
+            admin: admin_client,
+            user: user_client,
+            moderator: moderator_client
+        }
+        url_template = '/api/v1/titles/{title_id}/reviews/{review_id}/'
+        reviews, titles = create_reviews(admin_client, author_map)
+        new_data = {
+            'text': 'Top score',
+            'score': 10
+        }
+    
+        for idx, (client, role) in enumerate((
+                (moderator_client, 'модератора'),
+                (admin_client, 'администратора')
+        ), 1):
+>           response = client.patch(
+                url_template.format(
+                    title_id=titles[0]["id"], review_id=reviews[idx]["id"]
+                ),
+                data=new_data
+            )
+
+tests\test_05_review.py:359: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+venv\Lib\site-packages\rest_framework\test.py:311: in patch
+    response = super().patch(
+venv\Lib\site-packages\rest_framework\test.py:217: in patch
+    return self.generic('PATCH', path, data, content_type, **extra)
+venv\Lib\site-packages\rest_framework\test.py:233: in generic
+    return super().generic(
+venv\Lib\site-packages\django\test\client.py:473: in generic
+    return self.request(**r)
+venv\Lib\site-packages\rest_framework\test.py:285: in request
+    return super().request(**kwargs)
+venv\Lib\site-packages\rest_framework\test.py:237: in request
+    request = super().request(**kwargs)
+venv\Lib\site-packages\django\test\client.py:719: in request
+    self.check_exception(response)
+venv\Lib\site-packages\django\test\client.py:580: in check_exception
+    raise exc_value
+venv\Lib\site-packages\django\core\handlers\exception.py:47: in inner
+    response = get_response(request)
+venv\Lib\site-packages\django\core\handlers\base.py:181: in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+venv\Lib\site-packages\django\views\decorators\csrf.py:54: in wrapped_view
+    return view_func(*args, **kwargs)
+venv\Lib\site-packages\rest_framework\viewsets.py:125: in view
+    return self.dispatch(request, *args, **kwargs)
+venv\Lib\site-packages\rest_framework\views.py:509: in dispatch
+    response = self.handle_exception(exc)
+venv\Lib\site-packages\rest_framework\views.py:469: in handle_exception
+    self.raise_uncaught_exception(exc)
+venv\Lib\site-packages\rest_framework\views.py:480: in raise_uncaught_exception
+    raise exc
+venv\Lib\site-packages\rest_framework\views.py:506: in dispatch
+    response = handler(request, *args, **kwargs)
+venv\Lib\site-packages\rest_framework\mixins.py:82: in partial_update
+    return self.update(request, *args, **kwargs)
+venv\Lib\site-packages\rest_framework\mixins.py:68: in update
+    self.perform_update(serializer)
+api_yamdb\api\views.py:78: in perform_update
+    serializer.save(author=self.request.user)
+venv\Lib\site-packages\rest_framework\serializers.py:200: in save
+    self.instance = self.update(self.instance, validated_data)
+venv\Lib\site-packages\rest_framework\serializers.py:983: in update
+    instance.save()
+venv\Lib\site-packages\django\db\models\base.py:726: in save
+    self.save_base(using=using, force_insert=force_insert,
+venv\Lib\site-packages\django\db\models\base.py:763: in save_base
+    updated = self._save_table(
+venv\Lib\site-packages\django\db\models\base.py:845: in _save_table
+    updated = self._do_update(base_qs, using, pk_val, values, update_fields,
+venv\Lib\site-packages\django\db\models\base.py:899: in _do_update
+    return filtered._update(values) > 0
+venv\Lib\site-packages\django\db\models\query.py:802: in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+venv\Lib\site-packages\django\db\models\sql\compiler.py:1535: in execute_sql
+    cursor = super().execute_sql(result_type)
+venv\Lib\site-packages\django\db\models\sql\compiler.py:1169: in execute_sql
+    cursor.execute(sql, params)
+venv\Lib\site-packages\django\db\backends\utils.py:66: in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+venv\Lib\site-packages\django\db\backends\utils.py:75: in _execute_with_wrappers
+    return executor(sql, params, many, context)
+venv\Lib\site-packages\django\db\backends\utils.py:79: in _execute
+    with self.db.wrap_database_errors:
+venv\Lib\site-packages\django\db\utils.py:90: in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+venv\Lib\site-packages\django\db\backends\utils.py:84: in _execute
+    return self.cursor.execute(sql, params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x000001F5717819A0>
+query = 'UPDATE "reviews_review" SET "author_id" = ?, "title_id_id" = ?, "text" = ?, "score" = ?, "pub_date" = ? WHERE "reviews_review"."id" = ?'
+params = (95, 17, 'Top score', 10, '2023-01-27 16:21:38.206526', 12)
+
+    def execute(self, query, params=None):
+        if params is None:
+            return Database.Cursor.execute(self, query)
+        query = self.convert_query(query)
+>       return Database.Cursor.execute(self, query, params)
+E       django.db.utils.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+
+venv\Lib\site-packages\django\db\backends\sqlite3\base.py:423: IntegrityError
+------------------------------ Captured log call ------------------------------
+ERROR    django.request:log.py:224 Internal Server Error: /api/v1/titles/17/reviews/12/
+Traceback (most recent call last):
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\mixins.py", line 82, in partial_update
+    return self.update(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\mixins.py", line 68, in update
+    self.perform_update(serializer)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\api_yamdb\api\views.py", line 78, in perform_update
+    serializer.save(author=self.request.user)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\serializers.py", line 200, in save
+    self.instance = self.update(self.instance, validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\serializers.py", line 983, in update
+    instance.save()
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 726, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 763, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 845, in _save_table
+    updated = self._do_update(base_qs, using, pk_val, values, update_fields,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\base.py", line 899, in _do_update
+    return filtered._update(values) > 0
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\query.py", line 802, in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1535, in execute_sql
+    cursor = super().execute_sql(result_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1169, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: reviews_review.author_id, reviews_review.title_id_id
+============================== warnings summary ===============================
+venv\Lib\site-packages\django\http\request.py:1
+  C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\http\request.py:1: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+venv\Lib\site-packages\django\utils\encoding.py:266
+  C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\utils\encoding.py:266: DeprecationWarning: Use setlocale(), getencoding() and getlocale() instead
+    encoding = locale.getdefaultlocale()[1] or 'ascii'
+
+tests/test_00_user_registration.py: 3527 warnings
+tests/test_01_users.py: 4804 warnings
+tests/test_02_category.py: 1157 warnings
+tests/test_03_genre.py: 1167 warnings
+tests/test_04_title.py: 1113 warnings
+tests/test_05_review.py: 1325 warnings
+tests/test_06_comment.py: 1719 warnings
+  C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\django\utils\asyncio.py:19: DeprecationWarning: There is no current event loop
+    event_loop = asyncio.get_event_loop()
+
+tests/test_01_users.py::Test01UserAPI::test_04_users_get_admin
+tests/test_01_users.py::Test01UserAPI::test_04_02_users_get_search
+  C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'reviews.models.User'> QuerySet.
+    paginator = self.django_paginator_class(queryset, page_size)
+
+tests/test_02_category.py::Test02CategoryAPI::test_01_category_not_auth
+tests/test_02_category.py::Test02CategoryAPI::test_02_category_with_admin_user
+tests/test_02_category.py::Test02CategoryAPI::test_04_category_delete_admin
+  C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'reviews.models.Category'> QuerySet.
+    paginator = self.django_paginator_class(queryset, page_size)
+
+tests/test_03_genre.py::Test03GenreAPI::test_01_genre_not_auth
+tests/test_03_genre.py::Test03GenreAPI::test_02_genre
+tests/test_03_genre.py::Test03GenreAPI::test_04_genres_delete
+  C:\Users\Alexander\YP\Dev\api_yamdb\venv\Lib\site-packages\rest_framework\pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'reviews.models.Genre'> QuerySet.
+    paginator = self.django_paginator_class(queryset, page_size)
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_02_category.py::Test02CategoryAPI::test_02_category_with_admin_user
+FAILED tests/test_02_category.py::Test02CategoryAPI::test_04_category_delete_admin
+FAILED tests/test_03_genre.py::Test03GenreAPI::test_02_genre - AssertionError...
+FAILED tests/test_03_genre.py::Test03GenreAPI::test_04_genres_delete - Assert...
+FAILED tests/test_04_title.py::Test04TitleAPI::test_02_title_admin - Assertio...
+FAILED tests/test_04_title.py::Test04TitleAPI::test_03_titles_detail - Assert...
+FAILED tests/test_04_title.py::Test04TitleAPI::test_05_titles_check_permission
+FAILED tests/test_05_review.py::Test05ReviewAPI::test_02_review_post - django...
+FAILED tests/test_05_review.py::Test05ReviewAPI::test_05_reviews_detail_moderator_and_admin
+================ 9 failed, 68 passed, 14822 warnings in 15.37s ================

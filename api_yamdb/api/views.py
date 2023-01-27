@@ -6,11 +6,11 @@ from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import exceptions, filters, permissions, views, viewsets, generics
+from rest_framework import (exceptions, filters, permissions, views,
+                            viewsets, generics)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action, permission_classes, api_view
 from rest_framework_simplejwt.serializers import RefreshToken
 from reviews.models import Category, Comment, Genre, Review, Title, User
 from .permissions import IsAdmin, Titles, Categories, Comments, Reviews, Genres
@@ -126,24 +126,12 @@ class UserViewset(ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('username',)
 
-    """def update(self, request, *args, **kwargs):
-        raise exceptions.MethodNotAllowed('PUT')"""
-
-    """@api_view(['PATCH'])
-    def update(self, request, *args, **kwargs):
-        user = User.objects.get(username=kwargs['username'])
-        serializer = self.get_serializer(user, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save
-
-        return Response(serializer.data)"""
-
     def perform_create(self, serializer):
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(None)
             user.save()
-    
+
 
 class UserSignupView(views.APIView):
     """
@@ -192,7 +180,7 @@ class MeView(generics.RetrieveUpdateAPIView):
             return Response(serializer.data)
         except AttributeError:
             raise exceptions.NotFound
-    
+
     def put(self, request, *args, **kwargs):
         raise exceptions.MethodNotAllowed('PUT')
 
@@ -200,7 +188,7 @@ class MeView(generics.RetrieveUpdateAPIView):
         user = request.user
         serializer = self.get_serializer(user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
-        
+
         serializer.save(role=user.role)
 
         return Response(serializer.data)
