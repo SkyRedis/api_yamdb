@@ -1,4 +1,5 @@
 from django.db.models import Avg
+from django.shortcuts import get_object_or_404
 from rest_framework import exceptions, serializers, validators
 from reviews.models import Category, Comment, Genre, Review, Title, User
 
@@ -131,9 +132,11 @@ class TitleListSerializer(serializers.ModelSerializer):
         reviews = Review.objects.all().filter(
             title_id=obj.id
         )
-        rating = reviews.aggregate(Avg('score'))
-        return rating
-        #return int(list(rating.values())[0])
+        try:
+            rating = reviews.aggregate(Avg('score'))
+            return int(list(rating.values())[0])
+        except TypeError:
+            return None
 
 
 class TitleCreateSerializer(serializers.ModelSerializer):
@@ -145,20 +148,23 @@ class TitleCreateSerializer(serializers.ModelSerializer):
         slug_field='slug',
         queryset=Category.objects.all()
     )
-    #rating = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
-            'id', 'name', 'year', 'description', 'genre', 'category'
+            'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
         )
         model = Title
 
-    """def get_rating(self, obj):
+    def get_rating(self, obj):
         reviews = Review.objects.all().filter(
             title_id=obj.id
         )
-        rating = reviews.aggregate(Avg('score'))
-        return int(list(rating.values())[0])"""
+        try:
+            rating = reviews.aggregate(Avg('score'))
+            return int(list(rating.values())[0])
+        except TypeError:
+            return None
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -183,3 +189,19 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ('id', 'text', 'author', 'score', 'pub_date')
         model = Review
         lookup_field = 'id'
+
+    def validate(self, data):
+        title_id = self.context['view'].kwargs.get('title_id')
+        author = self.context.get('request').user
+        review = Review.objects.all().filter(
+            title_id=title_id,
+            author=author
+        )
+        if (
+            review.exists()
+            and self.context.get('request').method != 'PATCH'
+        ):
+            raise serializers.ValidationError(
+                'Можно оставлять только один отзыв!'
+            )
+        return data

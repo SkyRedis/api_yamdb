@@ -105,13 +105,12 @@ class Review(models.Model):
         related_name='reviews',
         verbose_name='Автор отзыва',
     )
-    title_id = models.ForeignKey(
+    title = models.ForeignKey(
         Title,
         on_delete=models.CASCADE,
         related_name='title',
         verbose_name='ID произведения',
     )
-    # Заменить IntegerField на ForeignKey после создания модели произведений
     text = models.TextField(
         verbose_name='Текст отзыва',
     )

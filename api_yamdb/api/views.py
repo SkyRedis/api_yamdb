@@ -1,20 +1,20 @@
 import secrets
 import string
-
 from http import HTTPStatus
+
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import (exceptions, filters, permissions, views,
-                            viewsets, generics)
+from rest_framework import (exceptions, filters, generics, permissions, views,
+                            viewsets)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.serializers import RefreshToken
 from reviews.models import Category, Comment, Genre, Review, Title, User
-from .permissions import IsAdmin, Titles, Categories, Comments, Reviews, Genres
 
+from .permissions import Categories, Comments, Genres, IsAdmin, Reviews, Titles
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, ReviewSerializer,
                           TitleCreateSerializer, TitleListSerializer,
@@ -72,10 +72,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-        serializer.save(author=self.request.user, title_id=title)
-
-    def perform_update(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save(author=self.request.user, title_id=title.id)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -97,9 +94,6 @@ class CommentViewSet(viewsets.ModelViewSet):
             id=self.kwargs.get('review_id')
         )[0]
         serializer.save(author=self.request.user, review_id=review)
-
-    def perform_update(self, serializer):
-        serializer.save(author=self.request.user)
 
 
 class UserViewset(ModelViewSet):
