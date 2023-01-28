@@ -1,9 +1,10 @@
-from api.views import (GetTokenView, CategoryViewSet, CommentViewSet,
-                       GenreViewSet, ReviewViewSet, TitleViewSet,
-                       UserSignupView, UserViewset, MeView)
 from django.urls import include, path
 from rest_framework import routers
-from .routers import RouterNoPUT, RouterModelSlug
+
+from .routers import RouterModelSlug, RouterNoPUT
+from api.views import (CategoryViewSet, CommentViewSet, GenreViewSet,
+                       GetTokenView, MeView, ReviewViewSet, TitleViewSet,
+                       UserSignupView, UserViewset)
 
 router_api_v1 = routers.DefaultRouter()
 router_api_v1_no_PUT = RouterNoPUT()

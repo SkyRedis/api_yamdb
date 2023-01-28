@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from core.models import CreatedModel
+
 
 class User(AbstractUser):
     USER_ROLES = (
@@ -34,23 +36,19 @@ class User(AbstractUser):
         return self.username
 
 
-class Category(models.Model):
-    name = models.CharField(
-        verbose_name='Категория',
-        max_length=256,
-    )
-    slug = models.SlugField(unique=True, max_length=50)
+class Category(CreatedModel):
+
+    class Meta:
+        verbose_name = 'Категория'
 
     def __str__(self) -> str:
         return f'{self.name} {self.slug}'
 
 
-class Genre(models.Model):
-    name = models.CharField(
-        verbose_name='Жанр',
-        max_length=256,
-    )
-    slug = models.SlugField(unique=True, max_length=50)
+class Genre(CreatedModel):
+
+    class Meta:
+        verbose_name = 'Жанр'
 
     def __str__(self) -> str:
         return f'{self.name} {self.slug}'
@@ -64,11 +62,7 @@ def validate_year(value):
     return value
 
 
-class Title(models.Model):
-    name = models.CharField(
-        verbose_name='Произведение',
-        max_length=256,
-    )
+class Title(CreatedModel):
     year = models.IntegerField(validators=[validate_year])
     description = models.TextField(
         verbose_name='Описание произведения',
@@ -94,6 +88,7 @@ class Title(models.Model):
         return self.name
 
     class Meta:
+        verbose_name = 'Произведение'
         ordering = ['-year']
 
 

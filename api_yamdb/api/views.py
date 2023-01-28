@@ -1,5 +1,6 @@
 import secrets
 import string
+
 from http import HTTPStatus
 
 from django.contrib.auth import authenticate
@@ -14,13 +15,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.serializers import RefreshToken
 from reviews.models import Category, Comment, Genre, Review, Title, User
 
+from .filters import TitleFilter
 from .permissions import Categories, Comments, Genres, IsAdmin, Reviews, Titles
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, ReviewSerializer,
                           TitleCreateSerializer, TitleListSerializer,
                           TokenRequestSerializer, UserSerializer,
                           UserSignupSerializer)
-from .filters import TitleFilter
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
