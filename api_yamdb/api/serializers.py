@@ -102,7 +102,7 @@ class TokenRequestSerializer(serializers.Serializer):
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id', 'name', 'slug')
+        fields = ('name', 'slug')
         model = Category
         lookup_field = 'slug'
 
@@ -110,16 +110,16 @@ class CategorySerializer(serializers.ModelSerializer):
 class GenreSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id', 'name', 'slug')
+        fields = ('name', 'slug')
         model = Genre
         lookup_field = 'slug'
 
 
 class TitleListSerializer(serializers.ModelSerializer):
-    genre = serializers.StringRelatedField(
+    genre = GenreSerializer(
+        read_only=True,
         many=True)
-    category = serializers.StringRelatedField(
-    )
+    category = CategorySerializer(read_only=True)
     rating = serializers.SerializerMethodField()
 
     class Meta:

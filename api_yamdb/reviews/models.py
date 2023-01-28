@@ -42,7 +42,7 @@ class Category(models.Model):
     slug = models.SlugField(unique=True, max_length=50)
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} {self.slug}'
 
 
 class Genre(models.Model):
@@ -53,7 +53,7 @@ class Genre(models.Model):
     slug = models.SlugField(unique=True, max_length=50)
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} {self.slug}'
 
 
 def validate_year(value):
@@ -65,7 +65,6 @@ def validate_year(value):
 
 
 class Title(models.Model):
-    # Возможно нужно добавить author и rating
     name = models.CharField(
         verbose_name='Произведение',
         max_length=256,

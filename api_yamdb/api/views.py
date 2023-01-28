@@ -20,6 +20,7 @@ from .serializers import (CategorySerializer, CommentSerializer,
                           TitleCreateSerializer, TitleListSerializer,
                           TokenRequestSerializer, UserSerializer,
                           UserSignupSerializer)
+from .filters import TitleFilter
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -50,10 +51,10 @@ class TitleViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     permission_classes = (Titles,)
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('name', 'year', 'genre__slug', 'category__slug')
+    filterset_class = TitleFilter
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action in ('list', 'retrieve'):
             return TitleListSerializer
         return TitleCreateSerializer
 
