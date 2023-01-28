@@ -37,6 +37,7 @@ class User(AbstractUser):
 
 
 class Category(CreatedModel):
+    slug = models.SlugField(unique=True, max_length=50)
 
     class Meta:
         verbose_name = 'Категория'
@@ -46,6 +47,7 @@ class Category(CreatedModel):
 
 
 class Genre(CreatedModel):
+    slug = models.SlugField(unique=True, max_length=50)
 
     class Meta:
         verbose_name = 'Жанр'
