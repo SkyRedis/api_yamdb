@@ -30,7 +30,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     permission_classes = (Categories,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('=category__name',)
+    search_fields = ('name',)
     lookup_field = 'slug'
 
 
@@ -41,7 +41,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     permission_classes = (Genres,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('=genre__name',)
+    search_fields = ('name',)
     lookup_field = 'slug'
 
 
