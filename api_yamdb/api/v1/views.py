@@ -1,6 +1,5 @@
 import secrets
 import string
-
 from http import HTTPStatus
 
 from django.contrib.auth import authenticate
