@@ -1,142 +1,55 @@
 from rest_framework import permissions
+from users.models import UserRole
 
 
-class Titles(permissions.BasePermission):
+class Everyone(permissions.BasePermission):
     def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'user'
-                    and request.method in permissions.SAFE_METHODS
-                    or user.role == 'moderator'
-                    and request.method in permissions.SAFE_METHODS
-                    or user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+        return (request.method in permissions.SAFE_METHODS)
 
     def has_object_permission(self, request, view, obj):
-        try:
-            user = request.user
-            return (user.role == 'user' and request.user == obj.author
-                    or user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+        return (request.method in permissions.SAFE_METHODS)
 
 
-class Categories(permissions.BasePermission):
+class IsUser(permissions.BasePermission):
     def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'user'
-                    and request.method in permissions.SAFE_METHODS
-                    or user.role == 'moderator'
-                    and request.method in permissions.SAFE_METHODS
-                    or user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+        user = request.user
+        if user.is_authenticated:
+            return (user.role == UserRole.USER)
+        return (request.method in permissions.SAFE_METHODS)
 
     def has_object_permission(self, request, view, obj):
-        try:
-            user = request.user
-            return (request.method not in permissions.SAFE_METHODS
-                    and (user.role == 'user'
-                         and request.user == obj.author
-                         or user.role == 'moderator'
-                         and request.user == obj.author
-                         or user.role == 'admin'
-                         or user.is_superuser))
-        except AttributeError:
-            return False
+        user = request.user
+        if user.is_authenticated:
+            return (user.role == UserRole.USER
+                    and user == obj.author)
+        return (request.method in permissions.SAFE_METHODS)
 
 
-class Genres(permissions.BasePermission):
+class IsModerator(permissions.BasePermission):
     def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'user'
-                    and request.method in permissions.SAFE_METHODS
-                    or user.role == 'moderator'
-                    and request.method in permissions.SAFE_METHODS
-                    or user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+        user = request.user
+        if user.is_authenticated:
+            return (user.role == UserRole.MODERATOR)
+        return False
 
     def has_object_permission(self, request, view, obj):
-        try:
-            user = request.user
-            return (request.method not in permissions.SAFE_METHODS
-                    and (user.role == 'user'
-                         and request.user == obj.author
-                         or user.role == 'moderator'
-                         and request.user == obj.author
-                         or user.role == 'admin'
-                         or user.is_superuser))
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+        user = request.user
+        if user.is_authenticated:
+            return (user.role == UserRole.MODERATOR)
+        return False
 
 
-class Reviews(permissions.BasePermission):
+class IsAdminOrSuperuser(permissions.BasePermission):
     def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'user'
-                    or user.role == 'moderator'
-                    or user.role == 'admin'
+        user = request.user
+        if user.is_authenticated:
+            return (user.role == UserRole.ADMIN
                     or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
+        return False
 
     def has_object_permission(self, request, view, obj):
-        try:
-            user = request.user
-            return (request.user.role == 'user' and request.user == obj.author
-                    or user.role == 'moderator'
-                    or user.role == 'admin'
+        user = request.user
+        if user.is_authenticated:
+            return (user.role == UserRole.ADMIN
                     or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
-
-
-class Comments(permissions.BasePermission):
-    def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'user'
-                    or user.role == 'moderator'
-                    or user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
-
-    def has_object_permission(self, request, view, obj):
-        try:
-            user = request.user
-            return (request.user.role == 'user' and request.user == obj.author
-                    or user.role == 'moderator'
-                    or user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return (request.method in permissions.SAFE_METHODS)
-
-
-class Users(permissions.BasePermission):
-    def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return False
-
-
-class IsAdmin(permissions.BasePermission):
-    def has_permission(self, request, view):
-        try:
-            user = request.user
-            return (user.role == 'admin'
-                    or user.is_superuser)
-        except AttributeError:
-            return False
+        return False

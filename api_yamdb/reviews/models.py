@@ -1,38 +1,10 @@
 import datetime as dt
 
 from core.models import CreatedModel
-from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-
-
-class User(AbstractUser):
-    USER_ROLES = (
-        ('user', 'Пользователь'),
-        ('moderator', 'Модератор'),
-        ('admin', 'Администратор'),
-    )
-    password = models.CharField(max_length=100, db_column='confirmation_id')
-    email = models.EmailField('email address', blank=True, unique=True)
-
-    bio = models.TextField(
-        blank=True,
-        verbose_name='Биография'
-    )
-    role = models.CharField(
-        max_length=10,
-        choices=USER_ROLES,
-        blank=True,
-        default='user'
-    )
-
-    class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
-
-    def __str__(self):
-        return self.username
+from users.models import User
 
 
 class Category(CreatedModel):

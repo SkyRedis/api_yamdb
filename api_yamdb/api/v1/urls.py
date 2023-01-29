@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from .routers import RouterModelSlug, RouterNoPUT
 from .views import (CategoryViewSet, CommentViewSet, GenreViewSet,
-                    GetTokenView, MeView, ReviewViewSet, TitleViewSet,
+                    GetTokenView, ReviewViewSet, TitleViewSet,
                     UserSignupView, UserViewset)
 
 router_api_v1 = routers.DefaultRouter()
@@ -26,13 +26,16 @@ router_api_v1.register(
     basename='comments'
 )
 
-urlpatterns = [
-    path('users/me/', MeView.as_view(), name='me'),
-    path('', include(router_api_v1.urls)),
-    path('', include(router_api_v1_no_PUT.urls)),
-    path('', include(router_api_v1_Model_Slug.urls)),
+auth_patterns = [
     path('auth/signup/', UserSignupView.as_view(), name='user_register'),
     path('auth/token/',
          GetTokenView.as_view(),
          name='sliding_toket_obtain'),
+]
+
+urlpatterns = [
+    path('', include(router_api_v1.urls)),
+    path('', include(router_api_v1_no_PUT.urls)),
+    path('', include(router_api_v1_Model_Slug.urls)),
+    path('', include(auth_patterns)),
 ]

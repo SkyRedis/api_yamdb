@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -28,6 +27,7 @@ INSTALLED_APPS = [
     'core',
     'api',
     'reviews',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -89,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'reviews.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 
@@ -113,7 +113,9 @@ STATICFILES_DIRS = ((BASE_DIR / 'static/'),)
 # filebased.EmailBackend
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+DEFAULT_FROM_EMAIL = 'admin@yamdb.com'
+
+EMAIL_FILE_PATH = ((BASE_DIR / 'sent_emails/'))
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
