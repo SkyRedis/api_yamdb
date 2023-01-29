@@ -83,17 +83,19 @@ class CommentViewSet(viewsets.ModelViewSet):
     lookup_field = 'id'
 
     def get_queryset(self):
-        queryset = Comment.objects.all().filter(
-            review_id=self.kwargs.get('review_id')
-        ).order_by('id')
-        return queryset
+        review = get_object_or_404(
+            Review,
+            id=self.kwargs.get('review_id'),
+            title=self.kwargs.get('title_id'),
+        )
+        return review.comments.all()
 
     def perform_create(self, serializer):
-        title = get_object_or_404(Title, id=self.kwargs.get('title_id'))
-        review = Review.objects.all().filter(
-            title_id=title.id,
+        review = get_object_or_404(
+            Review,
+            title=self.kwargs.get('title_id'),
             id=self.kwargs.get('review_id')
-        )[0]
+        )
         serializer.save(author=self.request.user, review_id=review)
 
 
