@@ -13,8 +13,9 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.serializers import RefreshToken
-from reviews.models import Category, Comment, Genre, Review, Title, User
+from rest_framework.exceptions import MethodNotAllowed
 
+from reviews.models import Category, Genre, Review, Title, User
 from .filters import TitleFilter
 from .permissions import Everyone, IsAdminOrSuperuser, IsUser, IsModerator
 
@@ -34,6 +35,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
+    http_method_names = ('get', 'post', 'delete')
+
+    def retrieve(self, request, *args, **kwargs):
+        raise MethodNotAllowed("GET")
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -45,6 +50,10 @@ class GenreViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
+    http_method_names = ('get', 'post', 'delete')
+
+    def retrieve(self, request, *args, **kwargs):
+        raise MethodNotAllowed("GET")
 
 
 class TitleViewSet(viewsets.ModelViewSet):
@@ -124,6 +133,7 @@ class UserViewset(ModelViewSet):
     permission_classes = (IsAdminOrSuperuser, )
     filter_backends = (filters.SearchFilter,)
     search_fields = ('username',)
+    http_method_names = ('get', 'post', 'patch', 'delete')
 
     @action(detail=False,
             methods=['GET', 'PATCH'],

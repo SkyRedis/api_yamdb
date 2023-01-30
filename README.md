@@ -17,6 +17,17 @@
 -cd yatube_api (перейти в приложение с файлом manage.py)
 -python manage.py migrate
 
+## SQlite3 и CSV
+### Для работы с sqlite3 и CSV используем следующие расширения:
+"SQLite Viewer" и "Edit csv"
+### Команды(для наполнения data base из CSV):
+-sqlite3 - запускаем терминал для работы с sqlite3
+-.open db.sqlite3 - открываем нашу базу
+-.mode csv - запускаем интерпретатор файлов CSV
+-.import s:/dev/api_yamdb/api_yamdb/static/data/titles.csv reviews_title - импортируем из CSV таблицы в db.sqlite3 по очереди
+(так же импортируем остальные таблицы)
+-.schema - проверяем наличие таблиц и их наименование полей
+
 ## Некоторые примеры запросов к API:
 ### 1.1. Пользователь отправляет POST-запрос с параметрами email и username на эндпоинт /api/v1/auth/signup/
 ### 1.2. Сервис YaMDB отправляет письмо с кодом подтверждения (confirmation_code) на указанный адрес email.

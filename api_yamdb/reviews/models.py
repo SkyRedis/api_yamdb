@@ -1,13 +1,12 @@
-import datetime as dt
-
-from core.models import CreatedModel
-from django.core.exceptions import ValidationError
+from core.models import AddNameModel
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
 from users.models import User
+from .validators import validate_year
 
 
-class Category(CreatedModel):
+class Category(AddNameModel):
     slug = models.SlugField(unique=True, max_length=50)
 
     class Meta:
@@ -17,7 +16,7 @@ class Category(CreatedModel):
         return f'{self.name} {self.slug}'
 
 
-class Genre(CreatedModel):
+class Genre(AddNameModel):
     slug = models.SlugField(unique=True, max_length=50)
 
     class Meta:
@@ -27,16 +26,8 @@ class Genre(CreatedModel):
         return f'{self.name} {self.slug}'
 
 
-def validate_year(value):
-    if value > dt.datetime.now().year:
-        raise ValidationError(
-            'Значение больше текущего года!'
-        )
-    return value
-
-
-class Title(CreatedModel):
-    year = models.IntegerField(validators=[validate_year])
+class Title(AddNameModel):
+    year = models.PositiveSmallIntegerField(validators=[validate_year])
     description = models.TextField(
         verbose_name='Описание произведения',
         blank=True,
