@@ -138,23 +138,12 @@ class TitleCreateSerializer(serializers.ModelSerializer):
         slug_field='slug',
         queryset=Category.objects.all()
     )
-    rating = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
-            'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
+            'id', 'name', 'year', 'description', 'genre', 'category'
         )
         model = Title
-
-    def get_rating(self, obj):
-        reviews = Review.objects.all().filter(
-            title_id=obj.id
-        )
-        try:
-            rating = reviews.aggregate(Avg('score'))
-            return int(list(rating.values())[0])
-        except TypeError:
-            return None
 
 
 class CommentSerializer(serializers.ModelSerializer):
