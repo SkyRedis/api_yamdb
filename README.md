@@ -20,12 +20,19 @@
 ## SQlite3 и CSV
 ### Для работы с sqlite3 и CSV используем следующие расширения:
 "SQLite Viewer" и "Edit csv"
+"SQLite Viewer" - расширение для просмотра файлов типа .sqlite
+"Edit csv" - расширение для редактирования таблиц типа .csv
 ### Команды(для наполнения data base из CSV):
 -sqlite3 - запускаем терминал для работы с sqlite3
 -.open db.sqlite3 - открываем нашу базу
 -.mode csv - запускаем интерпретатор файлов CSV
--.import s:/dev/api_yamdb/api_yamdb/static/data/titles.csv reviews_title - импортируем из CSV таблицы в db.sqlite3 по очереди
-(так же импортируем остальные таблицы)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/users.csv users_user - импортируем пользователей из users.csv в db.sqlite3(users_user)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/genre.csv reviews_genre - импортируем жанры из genre.csv в db.sqlite3(reviews_genre)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/category.csv reviews_category - импортируем категории из category.csv в db.sqlite3(reviews_category)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/titles.csv reviews_title - импортируем произведения из title.csv в db.sqlite3(reviews_title)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/genre_title.csv reviews_genretitle - импортируем связи произведений с жанрами из genre_title.csv в db.sqlite3(reviews_genretitle)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/review.csv reviews_review - импортируем отзывы из review.csv в db.sqlite3(reviews_review)
+-.import s:/dev/api_yamdb/api_yamdb/static/data/comments.csv reviews_comment - импортируем комментарии из comments.csv в db.sqlite3(reviews_comment)
 -.schema - проверяем наличие таблиц и их наименование полей
 
 ## Некоторые примеры запросов к API:
