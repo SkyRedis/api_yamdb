@@ -24,13 +24,13 @@ router_api_v1.register(
 )
 
 auth_patterns = [
-    path('auth/signup/', UserSignupView.as_view(), name='user_register'),
-    path('auth/token/',
+    path('signup/', UserSignupView.as_view(), name='user_register'),
+    path('token/',
          GetTokenView.as_view(),
          name='sliding_toket_obtain'),
 ]
 
 urlpatterns = [
     path('', include(router_api_v1.urls)),
-    path('', include(auth_patterns)),
+    path('auth/', include(auth_patterns)),
 ]

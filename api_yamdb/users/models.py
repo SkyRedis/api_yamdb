@@ -21,8 +21,20 @@ class User(AbstractUser):
         choices=UserRole.choices,
         blank=True,
         default='user',
-        verbose_name='Роль'
+        verbose_name=UserRole.USER
     )
+
+    @property
+    def is_user(self):
+        return self.role == UserRole.USER
+
+    @property
+    def is_moderator(self):
+        return self.role == UserRole.MODERATOR
+
+    @property
+    def is_admin(self):
+        return self.role == UserRole.ADMIN
 
     class Meta:
         verbose_name = 'user'
