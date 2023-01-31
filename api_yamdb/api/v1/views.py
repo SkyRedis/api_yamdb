@@ -2,6 +2,7 @@ import secrets
 import string
 from http import HTTPStatus
 
+from django.db.models import Avg
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
@@ -58,7 +59,7 @@ class GenreViewSet(viewsets.ModelViewSet):
 
 class TitleViewSet(viewsets.ModelViewSet):
     """Список произведений"""
-    queryset = Title.objects.all()
+    queryset = Title.objects.annotate(rating=Avg('reviews__score'))
     pagination_class = PageNumberPagination
     permission_classes = [Everyone | IsAdminOrSuperuser]
     filter_backends = (DjangoFilterBackend,)
